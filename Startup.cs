@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Microsoft.EntityFrameworkCore;
+using Ingredient_inator.Data;
+
 namespace Ingredient_inator
 {
     public class Startup
@@ -23,6 +26,9 @@ namespace Ingredient_inator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(option =>
+                option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
+
             services.AddControllersWithViews();
         }
 
