@@ -10,22 +10,11 @@ namespace Ingredient_inator.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Key]
-        public int UserId { get; set; }
-        // [Required(ErrorMessage = "Username is required.")]
-        // public string Username { get; set; }
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email Address")]
-        [Required(ErrorMessage = "Email address is required.")]
-        public string EmailAddress { get; set; }
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Password is required.")]
-        public string Password { get; set; }
         [Display(Name = "First Name")]
-        [Required(ErrorMessage = "First name is required.")]
+        // [Required(ErrorMessage = "First name is required.")]
         public string FirstName { get; set; }
         [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "Last name is required.")]
+        // [Required(ErrorMessage = "Last name is required.")]
         public string LastName { get; set; }
     }
 }

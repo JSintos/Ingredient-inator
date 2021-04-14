@@ -56,6 +56,7 @@ namespace Ingredient_inator
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

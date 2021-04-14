@@ -15,7 +15,6 @@ namespace Ingredient_inator.Data
         {
         }
 
-        // public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Checklist> Checklists { get; set; }
