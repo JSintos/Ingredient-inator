@@ -130,26 +130,5 @@ namespace Ingredient_inator.Controllers
 
             return View(FoundRecipe);
         }
-
-        [HttpPost]
-        public IActionResult ViewRecipe(int? RecipeId, Recipe Recipe)
-        {
-            var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == RecipeId).SingleOrDefault();
-            FoundRecipe.Author = Recipe.Author;
-            FoundRecipe.Name = Recipe.Name;
-            FoundRecipe.Category = Recipe.Category;
-            FoundRecipe.DateCreated = DateTime.Now;
-            FoundRecipe.ServingSize = Recipe.ServingSize;
-            FoundRecipe.PortionList = Recipe.PortionList;
-            FoundRecipe.IngredientList = Recipe.IngredientList;
-            FoundRecipe.Steps = Recipe.Steps;
-            FoundRecipe.PhotoLink = Recipe.PhotoLink;
-            FoundRecipe.VideoLink = Recipe.VideoLink;
-
-            _context.Recipes.Update(FoundRecipe);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
     }
 }
