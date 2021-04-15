@@ -11,7 +11,7 @@ namespace Ingredient_inator.Models
     {
         [Key]
         public int RecipeId { get; set; }
-        public int Author { get; set; }
+        public string Author { get; set; }
         [Required(ErrorMessage = "A category is required")]
         public int Category { get; set; }
         [DataType(DataType.Date)]
