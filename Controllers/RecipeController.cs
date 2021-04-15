@@ -42,6 +42,7 @@ namespace Ingredient_inator.Controllers
             var NewRecipe = new Recipe()
             {
                 Author = _userManager.GetUserId(User),
+                Name = Recipe.Name,
                 Category = Recipe.Category,
                 DateCreated = DateTime.Now,
                 ServingSize = Recipe.ServingSize,
@@ -79,6 +80,7 @@ namespace Ingredient_inator.Controllers
         {
             var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == RecipeId).SingleOrDefault();
             FoundRecipe.Author = Recipe.Author;
+            FoundRecipe.Name = Recipe.Name;
             FoundRecipe.Category = Recipe.Category;
             FoundRecipe.DateCreated = DateTime.Now;
             FoundRecipe.ServingSize = Recipe.ServingSize;
