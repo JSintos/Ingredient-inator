@@ -12,17 +12,17 @@ namespace Ingredient_inator.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext Context;
+        private readonly ApplicationDbContext _context;
 
-        public CategoryController(ApplicationDbContext Context)
+        public CategoryController(ApplicationDbContext context)
         {
-            this.Context = Context;
+            _context = context;
         }
 
         [Authorize]
         public IActionResult Index()
         {
-            var Categories = Context.Categories.ToList();
+            var Categories = _context.Categories.ToList();
 
             return View(Categories);
         }
@@ -40,8 +40,8 @@ namespace Ingredient_inator.Controllers
                 Name = Category.Name
             };
 
-            Context.Categories.Add(NewCategory);
-            Context.SaveChanges();
+            _context.Categories.Add(NewCategory);
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -53,7 +53,7 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
-            var FoundCategory = Context.Categories.Where(C => C.CategoryId == Id).SingleOrDefault();
+            var FoundCategory = _context.Categories.Where(C => C.CategoryId == Id).SingleOrDefault();
             if (FoundCategory == null)
             {
                 return RedirectToAction("Index");
@@ -65,11 +65,11 @@ namespace Ingredient_inator.Controllers
         [HttpPost]
         public IActionResult Update(int? CategoryId, Category Category)
         {
-            var FoundCategory = Context.Categories.Where(C => C.CategoryId == CategoryId).SingleOrDefault();
+            var FoundCategory = _context.Categories.Where(C => C.CategoryId == CategoryId).SingleOrDefault();
             FoundCategory.Name = Category.Name;
 
-            Context.Categories.Update(FoundCategory);
-            Context.SaveChanges();
+            _context.Categories.Update(FoundCategory);
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -81,14 +81,14 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
-            var FoundCategory = Context.Categories.Where(C => C.CategoryId == Id).SingleOrDefault();
+            var FoundCategory = _context.Categories.Where(C => C.CategoryId == Id).SingleOrDefault();
             if (FoundCategory == null)
             {
                 return RedirectToAction("Index");
             }
 
-            Context.Categories.Remove(FoundCategory);
-            Context.SaveChanges();
+            _context.Categories.Remove(FoundCategory);
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }

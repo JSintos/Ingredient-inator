@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Ingredient_inator.Data;
 using Ingredient_inator.Models;
 
@@ -12,95 +15,100 @@ namespace Ingredient_inator.Controllers
     public class RecipeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RecipeController(ApplicationDbContext context)
+        public RecipeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager) 
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
             var list = _context.Recipes.ToList();
+
             return View(list);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Recipe record)
+        public IActionResult Create(Recipe Recipe)
         {
-            var recipe = new Recipe()
+            var NewRecipe = new Recipe()
             {
-                Author = record.Author,
-                Category = record.Category,
+                // _userManager.GetUserId(User),
+                Author = Recipe.Author,
+                Category = Recipe.Category,
                 DateCreated = DateTime.Now,
-                ServingSize = record.ServingSize,
-                PortionList = record.PortionList,
-                IngredientList = record.IngredientList,
-                Steps = record.Steps,
-                PhotoLink = record.PhotoLink,
-                VideoLink = record.VideoLink
+                ServingSize = Recipe.ServingSize,
+                PortionList = Recipe.PortionList,
+                IngredientList = Recipe.IngredientList,
+                Steps = Recipe.Steps,
+                PhotoLink = Recipe.PhotoLink,
+                VideoLink = Recipe.VideoLink
             };
 
-            _context.Recipes.Add(recipe);
+            _context.Recipes.Add(NewRecipe);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var recipe = _context.Recipes.Where(i => i.RecipeId == id).SingleOrDefault();
-            if (recipe == null)
+            var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == Id).SingleOrDefault();
+            if (FoundRecipe == null)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(recipe);
+            return View(FoundRecipe);
         }
 
         [HttpPost]
-        public IActionResult Edit(int? id, Recipe record)
+        public IActionResult Edit(int? RecipeId, Recipe Recipe)
         {
-            var recipe = _context.Recipes.Where(i => i.RecipeId == id).SingleOrDefault();
-            recipe.Author = record.Author;
-            recipe.Category = record.Category;
-            recipe.DateCreated = DateTime.Now;
-            recipe.ServingSize = record.ServingSize;
-            recipe.PortionList = record.PortionList;
-            recipe.IngredientList = record.IngredientList;
-            recipe.Steps = record.Steps;
-            recipe.PhotoLink = record.PhotoLink;
-            recipe.VideoLink = record.VideoLink;
+            var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == RecipeId).SingleOrDefault();
+            FoundRecipe.Author = Recipe.Author;
+            FoundRecipe.Category = Recipe.Category;
+            FoundRecipe.DateCreated = DateTime.Now;
+            FoundRecipe.ServingSize = Recipe.ServingSize;
+            FoundRecipe.PortionList = Recipe.PortionList;
+            FoundRecipe.IngredientList = Recipe.IngredientList;
+            FoundRecipe.Steps = Recipe.Steps;
+            FoundRecipe.PhotoLink = Recipe.PhotoLink;
+            FoundRecipe.VideoLink = Recipe.VideoLink;
 
-            _context.Recipes.Update(recipe);
+            _context.Recipes.Update(FoundRecipe);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var recipe = _context.Recipes.Where(i => i.RecipeId == id).SingleOrDefault();
-            if (recipe == null)
+            var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == Id).SingleOrDefault();
+            if (FoundRecipe == null)
             {
                 return RedirectToAction("Index");
             }
 
-            _context.Recipes.Remove(recipe);
+            _context.Recipes.Remove(FoundRecipe);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
