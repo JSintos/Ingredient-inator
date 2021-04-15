@@ -41,8 +41,7 @@ namespace Ingredient_inator.Controllers
         {
             var NewRecipe = new Recipe()
             {
-                // _userManager.GetUserId(User),
-                Author = Recipe.Author,
+                Author = _userManager.GetUserId(User),
                 Category = Recipe.Category,
                 DateCreated = DateTime.Now,
                 ServingSize = Recipe.ServingSize,
