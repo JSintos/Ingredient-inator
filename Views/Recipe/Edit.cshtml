@@ -1,0 +1,84 @@
+﻿@model Ingredient_inator.Models.Recipe
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Recipe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RecipeId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateCreated" class="control-label"></label>
+                <input asp-for="DateCreated" class="form-control" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateModified" class="control-label"></label>
+                <input asp-for="DateModified" class="form-control" />
+                <span asp-validation-for="DateModified" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServingSize" class="control-label"></label>
+                <input asp-for="ServingSize" class="form-control" />
+                <span asp-validation-for="ServingSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PortionList" class="control-label"></label>
+                <textarea asp-for="PortionList" class="form-control"></textarea>
+                <span asp-validation-for="PortionList" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IngredientList" class="control-label"></label>
+                <textarea asp-for="IngredientList" class="form-control"></textarea>
+                <span asp-validation-for="IngredientList" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Steps" class="control-label"></label>
+                <textarea asp-for="Steps" class="form-control"></textarea>
+                <span asp-validation-for="Steps" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhotoLink" class="control-label"></label>
+                <input asp-for="PhotoLink" class="form-control" />
+                <span asp-validation-for="PhotoLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VideoLink" class="control-label"></label>
+                <input asp-for="VideoLink" class="form-control" />
+                <span asp-validation-for="VideoLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -8,7 +8,7 @@
 
 <div>
     @*<h4>Recipe</h4>*@
-    
+
     <h2 style="text-transform: uppercase;
                color: #AC3931;
                font-weight: bold;">
@@ -19,16 +19,16 @@
     </h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             Ingredients
         </dt>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             Instructions
         </dt>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             Photo
         </dt>
-        <dt class="col-sm-2">
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Category)
         </dt>
         <dd class="col-sm-10">
@@ -61,9 +61,6 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IngredientList)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IngredientList)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Steps)
         </dt>
@@ -81,7 +78,23 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.VideoLink)
-        </dd>
+        </dd>*@
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            <dt class="col-sm-2">
+                @Html.DisplayFor(model => model.PortionList)
+            </dt>
+            <dt class="col-sm-2">
+                @Html.DisplayFor(model => model.IngredientList)
+            </dt>
+        </dt>
+        <dt class="col-sm-3">
+            Instructions
+        </dt>
+        <dt class="col-sm-3">
+            Photo
+        </dt>
     </dl>
 </div>
 <div>
