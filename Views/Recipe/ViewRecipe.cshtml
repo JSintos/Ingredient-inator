@@ -19,82 +19,81 @@
     </h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-3">
+        <dt class="col-sm-4">
             Ingredients
         </dt>
-        <dt class="col-sm-3">
+        <dt class="col-sm-4">
             Instructions
         </dt>
-        <dt class="col-sm-3">
+        <dt class="col-sm-4">
             Photo
         </dt>
         @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ServingSize)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ServingSize)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PortionList)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PortionList)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IngredientList)
-        </dt>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Steps)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Steps)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhotoLink)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PhotoLink)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VideoLink)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VideoLink)
-        </dd>*@
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Category)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DateModified)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateModified)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ServingSize)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ServingSize)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PortionList)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PortionList)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IngredientList)
+            </dt>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Steps)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Steps)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PhotoLink)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PhotoLink)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.VideoLink)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VideoLink)
+            </dd>*@
     </dl>
     <dl class="row">
-        <dt class="col-sm-3">
-            <dt class="col-sm-2">
-                @Html.DisplayFor(model => model.PortionList)
-            </dt>
-            <dt class="col-sm-2">
-                @Html.DisplayFor(model => model.IngredientList)
-            </dt>
-        </dt>
-        <dt class="col-sm-3">
-            Instructions
-        </dt>
-        <dt class="col-sm-3">
-            Photo
-        </dt>
+        <dd class="col-sm-1" style="text-align: right;">
+            @Html.Raw(Model.PortionList.Replace(",", "<br/>"))
+        </dd>
+        <dd class="col-sm-2">
+            @Html.Raw(Model.IngredientList.Replace(",", "<br/>"))
+        </dd>
+        <dd class="col-sm-1"></dd>
+        <dd class="col-sm-4">
+            Instructions list here
+        </dd>
+        <dd class="col-sm-4">
+            Photo here
+        </dd>
     </dl>
 </div>
 <div>

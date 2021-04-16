@@ -85,6 +85,7 @@ namespace Ingredient_inator.Controllers
             FoundRecipe.DateCreated = DateTime.Now;
             FoundRecipe.ServingSize = Recipe.ServingSize;
             FoundRecipe.PortionList = Recipe.PortionList;
+            //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br />");
             FoundRecipe.IngredientList = Recipe.IngredientList;
             FoundRecipe.Steps = Recipe.Steps;
             FoundRecipe.PhotoLink = Recipe.PhotoLink;
@@ -127,6 +128,18 @@ namespace Ingredient_inator.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            // portion list
+            //Recipe.PortionList.Replace(",", "<br/>");
+            //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br/>");
+            //_context.Recipes.Update(FoundRecipe);
+            //_context.SaveChanges();
+            //string[] list = Recipe.PortionList.Replace(",", "<br />");
+
+            // remove later
+            //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br />");
+            //_context.Recipes.Update(FoundRecipe);
+            //_context.SaveChanges();
 
             return View(FoundRecipe);
         }
