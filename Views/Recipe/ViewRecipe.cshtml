@@ -89,10 +89,14 @@
         </dd>
         <dd class="col-sm-1"></dd>
         <dd class="col-sm-4">
-            Instructions list here
+            @Html.Raw(Model.Steps.Replace(";", "<br/>"))
         </dd>
         <dd class="col-sm-4">
-            Photo here
+            Photo:
+            @Html.DisplayFor(model => model.PhotoLink)
+            <br />
+            Video:
+            @Html.DisplayFor(model => model.VideoLink)
         </dd>
     </dl>
 </div>
