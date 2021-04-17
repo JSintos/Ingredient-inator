@@ -129,6 +129,15 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
+            RecipeReviewViewModel RRVM = new RecipeReviewViewModel();
+
+            RRVM.Recipe = FoundRecipe;
+            
+            var FoundReviews = _context.Reviews.Where(R => R.RecipeId == Id).ToList();
+            RRVM.Reviews = FoundReviews;
+
+            ViewBag.UserId = _userManager.GetUserId(User);
+
             // portion list
             //Recipe.PortionList.Replace(",", "<br/>");
             //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br/>");
@@ -141,7 +150,7 @@ namespace Ingredient_inator.Controllers
             //_context.Recipes.Update(FoundRecipe);
             //_context.SaveChanges();
 
-            return View(FoundRecipe);
+            return View(RRVM);
         }
     }
 }
