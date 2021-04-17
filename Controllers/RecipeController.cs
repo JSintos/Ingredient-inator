@@ -137,19 +137,23 @@ namespace Ingredient_inator.Controllers
 
             ViewBag.UserId = _userManager.GetUserId(User);
 
-            // portion list
-            //Recipe.PortionList.Replace(",", "<br/>");
-            //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br/>");
-            //_context.Recipes.Update(FoundRecipe);
-            //_context.SaveChanges();
-            //string[] list = Recipe.PortionList.Replace(",", "<br />");
-
-            // remove later
-            //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br />");
-            //_context.Recipes.Update(FoundRecipe);
-            //_context.SaveChanges();
-
             return View(RRVM);
+        }
+
+        public IActionResult ViewShoppingList(int? Id)
+        {
+            if (Id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == Id).SingleOrDefault();
+            if (FoundRecipe == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(FoundRecipe);
         }
     }
 }

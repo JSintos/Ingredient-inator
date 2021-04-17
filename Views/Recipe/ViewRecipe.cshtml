@@ -5,7 +5,11 @@
 }
 
 <div>
-    @*<h4>Recipe</h4>*@
+    <h2 style="text-transform: uppercase;
+               color: #AC3931;
+               font-weight: bold;">
+        @Html.DisplayFor(model => model.Recipe.Name)
+    </h2>
 
     @if (ViewBag.UserId == Model.Recipe.Author)
     { 
@@ -16,14 +20,8 @@
     </p>
         
     }
-    
-    
 
-    <h2 style="text-transform: uppercase; color: #AC3931; font-weight: bold;">
-        @Html.DisplayFor(model => model.Recipe.Name)
-    </h2>
     <h4 style="text-transform: uppercase; font-weight: bold;">
-
         BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Recipe.Author)</a>
     </h4>
     <hr />
