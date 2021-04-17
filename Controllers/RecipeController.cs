@@ -85,7 +85,6 @@ namespace Ingredient_inator.Controllers
             FoundRecipe.DateCreated = DateTime.Now;
             FoundRecipe.ServingSize = Recipe.ServingSize;
             FoundRecipe.PortionList = Recipe.PortionList;
-            //FoundRecipe.PortionList = Recipe.PortionList.Replace(",", "<br />");
             FoundRecipe.IngredientList = Recipe.IngredientList;
             FoundRecipe.Steps = Recipe.Steps;
             FoundRecipe.PhotoLink = Recipe.PhotoLink;

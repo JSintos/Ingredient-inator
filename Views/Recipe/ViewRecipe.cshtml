@@ -4,8 +4,6 @@
     ViewData["Title"] = "ViewRecipe";
 }
 
-@*<h1>ViewRecipe</h1>*@
-
 <div>
     @*<h4>Recipe</h4>*@
 
@@ -57,6 +55,13 @@
             <br />
             Video:
             @Html.DisplayFor(model => model.Recipe.VideoLink)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dd class="col-sm-4">
+            <p>
+                <a asp-action="ViewShoppingList" asp-route-id="@Model.RecipeId" target="external">Print as Shopping List</a>
+            </p>
         </dd>
     </dl>
 </div>

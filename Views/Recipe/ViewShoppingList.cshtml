@@ -1,0 +1,27 @@
+﻿@model Ingredient_inator.Models.Recipe
+
+@{
+    ViewData["Title"] = "ViewShoppingList";
+}
+
+<div style="text-align: center;">
+    <h2 style="text-transform: uppercase;
+               color: #AC3931;
+               font-weight: bold;">
+        @Html.DisplayFor(model => model.Name)
+    </h2>
+    <h4 style="text-transform: uppercase; font-weight: bold;">
+        BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Author)</a>
+    </h4>
+    <hr />
+    <h4>Shopping List</h4>
+    <dl class="row" style="justify-content: center;">
+
+        <dd class="col-sm-2" style="text-align: right!important;">
+            @Html.Raw(Model.PortionList.Replace(",", "<br/>"))
+        </dd>
+        <dd class="col-sm-2" style="text-align: left!important">
+            @Html.Raw(Model.IngredientList.Replace(",", "<br/>"))
+        </dd>
+    </dl>
+</div>
