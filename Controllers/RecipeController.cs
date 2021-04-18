@@ -128,7 +128,16 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(FoundRecipe);
+            RecipeReviewViewModel RRVM = new RecipeReviewViewModel();
+
+            RRVM.Recipe = FoundRecipe;
+            
+            var FoundReviews = _context.Reviews.Where(R => R.RecipeId == Id).ToList();
+            RRVM.Reviews = FoundReviews;
+
+            ViewBag.UserId = _userManager.GetUserId(User);
+
+            return View(RRVM);
         }
 
         public IActionResult ViewShoppingList(int? Id)

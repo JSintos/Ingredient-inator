@@ -12,7 +12,7 @@ namespace Ingredient_inator.Models
         [Key]
         public int ReviewId { get; set; }
         public int RecipeId { get; set; }
-        public int Author { get; set; }
+        public string Author { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Date Posted")]
         public DateTime DatePosted { get; set; }

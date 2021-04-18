@@ -1,5 +1,5 @@
-﻿@model Ingredient_inator.Models.Recipe
-
+﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
+@model Ingredient_inator.Models.RecipeReviewViewModel
 @{
     ViewData["Title"] = "ViewRecipe";
 }
@@ -8,10 +8,21 @@
     <h2 style="text-transform: uppercase;
                color: #AC3931;
                font-weight: bold;">
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Recipe.Name)
     </h2>
+
+    @if (ViewBag.UserId == Model.Recipe.Author)
+    { 
+    
+    <p>
+        <a asp-action="Edit" asp-route-id="@Model.Recipe.RecipeId">Edit</a> |
+        <a asp-action="Delete" asp-route-id="@Model.Recipe.RecipeId" onclick='return confirm("Are you sure?")'>Delete</a>
+    </p>
+        
+    }
+
     <h4 style="text-transform: uppercase; font-weight: bold;">
-        BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Author)</a>
+        BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Recipe.Author)</a>
     </h4>
     <hr />
     <dl class="row">
@@ -27,21 +38,21 @@
     </dl>
     <dl class="row">
         <dd class="col-sm-1" style="text-align: right;">
-            @Html.Raw(Model.PortionList.Replace(",", "<br/>"))
+            @Html.Raw(Model.Recipe.PortionList.Replace(",", "<br/>"))
         </dd>
         <dd class="col-sm-2">
-            @Html.Raw(Model.IngredientList.Replace(",", "<br/>"))
+            @Html.Raw(Model.Recipe.IngredientList.Replace(",", "<br/>"))
         </dd>
         <dd class="col-sm-1"></dd>
         <dd class="col-sm-4">
-            @Html.Raw(Model.Steps.Replace(";", "<br/>"))
+            @Html.Raw(Model.Recipe.Steps.Replace(";", "<br/>"))
         </dd>
         <dd class="col-sm-4">
             Photo:
-            @Html.DisplayFor(model => model.PhotoLink)
+            @Html.DisplayFor(model => model.Recipe.PhotoLink)
             <br />
             Video:
-            @Html.DisplayFor(model => model.VideoLink)
+            @Html.DisplayFor(model => model.Recipe.VideoLink)
         </dd>
     </dl>
     <dl class="row">
@@ -52,7 +63,61 @@
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.RecipeId">Edit</a> |
+    <h1>Leave a review</h1>
+    <br />
+    <form asp-action="Create" method="post" asp-controller="Review">
+        <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)"/>
+        <input type="text" asp-for="Content" value="" placeholder="Content" />
+        <input type="text" asp-for="Rating" value="" placeholder="Rating" />
+        <input type="submit" name="submitReview" value="Submit review" />
+    </form>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Content
+                </th>
+                <th>
+                    Rating
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Reviews)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                @if (ViewBag.UserId == item.Author)
+                {
+                <td>
+                    @* TODO finish edit review *@
+                    <a asp-action="Edit" asp-controller="Review" asp-route-id="@item.ReviewId">Edit</a> |
+                    <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
+                </td>
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Recipe.RecipeId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
