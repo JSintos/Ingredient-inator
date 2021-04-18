@@ -4,6 +4,7 @@
     ViewData["Title"] = "ViewShoppingList";
 }
 
+
 <div style="text-align: center;">
     <h2 style="text-transform: uppercase;
                color: #AC3931;
@@ -14,14 +15,31 @@
         BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Author)</a>
     </h4>
     <hr />
+
     <h4>Shopping List</h4>
+
     <dl class="row" style="justify-content: center;">
 
-        <dd class="col-sm-2" style="text-align: right!important;">
+        <dd class="col-sm-2" style="text-align: right!important;" name="Portion">
             @Html.Raw(Model.PortionList.Replace(",", "<br/>"))
         </dd>
-        <dd class="col-sm-2" style="text-align: left!important">
+        <dd class="col-sm-2" style="text-align: left!important" name="Ingredient">
             @Html.Raw(Model.IngredientList.Replace(",", "<br/>"))
         </dd>
+
     </dl>
+    <button onclick="hide(); window.print(); show()" id="btn">Print this List</button>
+
+    
 </div>
+
+<script>
+    function hide() {
+        var x = document.getElementById("btn");
+        x.style.visibility = "hidden";        
+    }
+    function show() {
+        var x = document.getElementById("btn");
+        x.style.visibility = "visible";
+    }
+</script>
