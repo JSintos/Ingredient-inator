@@ -46,33 +46,20 @@ namespace Ingredient_inator.Controllers
             return Redirect("~/Recipe/Index");
         }
 
-        //public IActionResult Edit(int? Id)
-        //{
-        //    if (Id == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == Id).SingleOrDefault();
-        //    if (FoundRecipe == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(FoundRecipe);
-        //}
-
         [HttpPost]
         public IActionResult Edit(int? ReviewId, Review Review)
         {
-            var FoundReview = _context.Reviews.Where(R => R.ReviewId == ReviewId).SingleOrDefault();
-            FoundReview.Content = Review.Content;
-            FoundReview.Rating = Review.Rating;
-            
-            _context.Reviews.Update(FoundReview);
-            _context.SaveChanges();
+            System.Diagnostics.Debug.WriteLine("Here! -> " + Review.Content);
+            System.Diagnostics.Debug.WriteLine("Here! -> " + Review.Rating);
 
-            return RedirectToAction("Index");
+            //var FoundReview = _context.Reviews.Where(R => R.ReviewId == ReviewId).SingleOrDefault();
+            //FoundReview.Content = Review.Content;
+            //FoundReview.Rating = Review.Rating;
+
+            //_context.Reviews.Update(FoundReview);
+            //_context.SaveChanges();
+
+            return Redirect("~/Recipe/Index");
         }
 
         public IActionResult Delete(int? Id)

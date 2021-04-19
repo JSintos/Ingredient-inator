@@ -13,5 +13,6 @@ namespace Ingredient_inator.Models
         public int CategoryId { get; set; }
         [Required(ErrorMessage = "A name is required")]
         public string Name { get; set; }
+        public string Author { get; set; }
     }
 }
