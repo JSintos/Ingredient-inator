@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Ingredient_inator.Models.Recipe>
+
+@{
+    ViewData["Title"] = "I2RG";
+}
+
+<h1>Ingredient-to-Recipe Generation</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="recipes" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServingSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PortionList)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IngredientList)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServingSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PortionList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientList)
+                </td>
+                <td>
+                    <a asp-action="ViewRecipe" asp-route-id="@item.RecipeId">Details</a>
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServingSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PortionList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientList)
+                </td>
+                <td>
+                    <a asp-action="ViewRecipe" asp-route-id="@item.RecipeId">Details</a>
+                </td>
+            </tr>}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServingSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PortionList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientList)
+                </td>
+                <td>
+                    <a asp-action="ViewRecipe" asp-route-id="@item.RecipeId">Details</a>
+                </td>
+            </tr>}
+    </tbody>
+</table>
+
+@section Scripts{
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#recipes').DataTable();
+        });
+    </script>
+}
