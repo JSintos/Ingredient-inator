@@ -103,5 +103,10 @@ namespace Ingredient_inator.Controllers
 
             return View();
         }
+
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
     }
 }

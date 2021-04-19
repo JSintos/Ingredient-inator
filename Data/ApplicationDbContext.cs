@@ -19,6 +19,6 @@ namespace Ingredient_inator.Data
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Checklist> Checklists { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Ingredient_inator.Models.Contact> Contact { get; set; }
+        public DbSet<Contact> Contact { get; set; }
     }
 }
