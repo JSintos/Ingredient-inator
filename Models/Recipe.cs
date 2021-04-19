@@ -14,7 +14,7 @@ namespace Ingredient_inator.Models
         public string Name { get; set; }
         public string Author { get; set; }
         [Required(ErrorMessage = "A category is required")]
-        public int Category { get; set; }
+        public int? Category { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }

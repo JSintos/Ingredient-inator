@@ -109,6 +109,13 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
+            var FoundReviews = _context.Reviews.Where(R => R.RecipeId == Id).ToList();
+            foreach (Review Review in FoundReviews)
+            {
+                _context.Reviews.Remove(Review);
+            }
+            _context.SaveChanges();
+
             _context.Recipes.Remove(FoundRecipe);
             _context.SaveChanges();
 
