@@ -91,6 +91,7 @@ namespace Ingredient_inator.Controllers
             FoundRecipe.Name = Recipe.Name;
             FoundRecipe.Category = Recipe.Category;
             FoundRecipe.DateCreated = DateTime.Now;
+            FoundRecipe.DateModified = DateTime.Now;
             FoundRecipe.ServingSize = Recipe.ServingSize;
             FoundRecipe.PortionList = Recipe.PortionList;
             FoundRecipe.IngredientList = Recipe.IngredientList;
