@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Ingredient_inator.Data;
 using Ingredient_inator.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ingredient_inator.Controllers
 {
@@ -37,12 +38,12 @@ namespace Ingredient_inator.Controllers
         }
 
         //Ingredient-to-Recipe Generation Page
-        public IActionResult I2RG()
-        {
-            var list = _context.Recipes.ToList();
+        //public IActionResult I2RG()
+        //{
+        //    var list = _context.Recipes.ToList();
 
-            return View(list);
-        }
+        //    return View(list);
+        //}
 
         [HttpPost]
         public IActionResult Create(Recipe Recipe)
@@ -170,6 +171,20 @@ namespace Ingredient_inator.Controllers
             }
 
             return View(FoundRecipe);
+        }
+
+        //Ingredient-to-Recipe Generation Page
+        public async Task<IActionResult> I2RG(string searchString)
+        {
+            var recipes = from r in _context.Recipes
+                         select r;
+
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                recipes = recipes.Where(s => s.IngredientList.Contains(searchString));
+            }
+
+            return View(await recipes.ToListAsync());
         }
     }
 }
