@@ -106,7 +106,7 @@
                     </td>
                     <form asp-action="Edit" method="post" asp-controller="Review">
                         <td>
-                            <textarea class="d-none" asp-for="Content" name="editContent" id="editContent" cols="30" rows="10"></textarea>
+                            <textarea class="d-none" id="editContent" asp-for="Content" cols="30" rows="10"></textarea>
                         </td>
                         <td>
                             <input class="d-none" id="editRating" asp-for="Rating" type="number" value="@Html.Raw(item.Rating)">
