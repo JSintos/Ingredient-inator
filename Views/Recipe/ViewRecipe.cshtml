@@ -105,8 +105,9 @@
                         @Html.DisplayFor(modelItem => item.Rating)
                     </td>
                     <form asp-action="Edit" method="post" asp-controller="Review">
+                        <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
                         <td>
-                            <textarea class="d-none" asp-for="Content" name="editContent" id="editContent" cols="30" rows="10"></textarea>
+                            <textarea class="d-none" id="editContent" asp-for="Content" cols="30" rows="10"></textarea>
                         </td>
                         <td>
                             <input class="d-none" id="editRating" asp-for="Rating" type="number" value="@Html.Raw(item.Rating)">
@@ -117,7 +118,7 @@
                     @if (ViewBag.UserId == item.Author)
                     {
                         <td>
-                            <a id="editReview">Edit</a> | 
+                            <a id="editReview" style="cursor: pointer; color: #0366d6;">Edit</a> | 
                             <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
                         </td>
                     }

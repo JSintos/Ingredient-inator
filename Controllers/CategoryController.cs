@@ -96,7 +96,7 @@ namespace Ingredient_inator.Controllers
             var FoundRecipes = _context.Recipes.Where(R => R.Category == Id).ToList();
             foreach (Recipe Recipe in FoundRecipes)
             {
-                Recipe.Category = null;
+                Recipe.Category = -999;
             }
             _context.SaveChanges();
 

@@ -11,6 +11,7 @@ namespace Ingredient_inator.Models
     {
         public Recipe Recipe { get; set; }
         public List<Review> Reviews { get; set; }
+        public int ReviewId { get; set; }
         public int RecipeId { get; set; }
         public string Content { get; set; }
         public int Rating { get; set; }
