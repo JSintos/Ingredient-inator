@@ -36,6 +36,14 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
+        //Ingredient-to-Recipe Generation Page
+        public IActionResult I2RG()
+        {
+            var list = _context.Recipes.ToList();
+
+            return View(list);
+        }
+
         [HttpPost]
         public IActionResult Create(Recipe Recipe)
         {
