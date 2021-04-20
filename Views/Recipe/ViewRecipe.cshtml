@@ -11,14 +11,14 @@
         @Html.DisplayFor(model => model.Recipe.Name)
     </h2>
 
+    <p>Category: @Html.DisplayFor(model => model.Recipe.Category)</p>
+
     @if (ViewBag.UserId == Model.Recipe.Author)
     {
-
         <p>
             <a asp-action="Edit" asp-route-id="@Model.Recipe.RecipeId">Edit</a> |
             <a asp-action="Delete" asp-route-id="@Model.Recipe.RecipeId" onclick='return confirm("Are you sure?")'>Delete</a>
         </p>
-
     }
     <a asp-action="Index">Back to List</a>
 
@@ -90,6 +90,9 @@
                     Rating
                 </th>
                 <th>
+                    Date and time
+                </th>
+                <th>
                     Edited?
                 </th>
             </tr>
@@ -106,6 +109,9 @@
                     </td>
                     <td class="reviewRating">
                         @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @item.DateModified.Value.ToString("dd MMMM yyyy, HH:mm")
                     </td>
                     <td>
                         @if (item.DateModified != null)
