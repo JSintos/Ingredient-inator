@@ -14,13 +14,13 @@
     @if (ViewBag.UserId == Model.Recipe.Author)
     {
 
-        <p>
+        <p id="toHide">
             <a asp-action="Edit" asp-route-id="@Model.Recipe.RecipeId">Edit</a> |
             <a asp-action="Delete" asp-route-id="@Model.Recipe.RecipeId" onclick='return confirm("Are you sure?")'>Delete</a>
         </p>
 
     }
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" id="hide">Back to List</a>
 
     <h4 style="text-transform: uppercase; font-weight: bold;">
         BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Recipe.Author)</a>
@@ -59,16 +59,16 @@
     <dl class="row">
         <dd class="col-sm-4">
             <p>
-                <a asp-action="ViewShoppingList" asp-route-id="@Model.RecipeId" target="external">Print as Shopping List</a>
+                <button onclick="hide(); window.print(); show()" id="hide1">Print as Shopping List</button>
             </p>
         </dd>
     </dl>
 </div>
 
-<div>
+<div id="hide2">
     <h1>Leave a review</h1>
     <br />
-    <form asp-action="Create" method="post" asp-controller="Review">
+    <form asp-action="Create" method="post" asp-controller="Review" id="toHide">
         <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
         <input type="text" asp-for="Content" value="" placeholder="Content" />
         <input type="text" asp-for="Rating" value="" placeholder="Rating" />
@@ -76,7 +76,7 @@
     </form>
 </div>
 
-<div>
+<div id="hide3">
     <table class="table">
         <thead>
             <tr>
@@ -132,19 +132,19 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script>
         $(document).ready(function () {
-            $("#editReview").on("click", function(){
-               $(this).addClass("d-none"); 
+            $("#editReview").on("click", function () {
+                $(this).addClass("d-none");
 
-               $("#reviewContent").addClass("d-none");
-               $("#reviewRating").addClass("d-none");
+                $("#reviewContent").addClass("d-none");
+                $("#reviewRating").addClass("d-none");
 
-               $("#editContent").removeClass("d-none");
-               $("#editRating").removeClass("d-none");
-               $("#submitUpdatedReview").removeClass("d-none");
-               $("#cancelUpdate").removeClass("d-none");
+                $("#editContent").removeClass("d-none");
+                $("#editRating").removeClass("d-none");
+                $("#submitUpdatedReview").removeClass("d-none");
+                $("#cancelUpdate").removeClass("d-none");
             });
 
-            $("#cancelUpdate").on("click", function(){
+            $("#cancelUpdate").on("click", function () {
                 $("#editContent").addClass("d-none");
                 $("#editRating").addClass("d-none");
                 $("#submitUpdatedReview").addClass("d-none");
@@ -155,5 +155,29 @@
                 $("#reviewRating").removeClass("d-none");
             });
         });
+        function hide() {
+            var a = document.getElementById("toHide");
+            var b = document.getElementById("hide");
+            var c = document.getElementById("hide1");
+            var d = document.getElementById("hide2");
+            var e = document.getElementById("hide3");
+            a.style.visibility = "hidden";
+            b.style.visibility = "hidden";
+            c.style.visibility = "hidden";
+            d.style.visibility = "hidden";
+            e.style.visibility = "hidden";
+        }
+        function show() {
+            var a = document.getElementById("toHide");
+            var b = document.getElementById("hide");
+            var c = document.getElementById("hide1");
+            var d = document.getElementById("hide2");
+            var e = document.getElementById("hide3");
+            a.style.visibility = "visible";
+            b.style.visibility = "visible";
+            c.style.visibility = "visible";
+            d.style.visibility = "visible";
+            e.style.visibility = "visible";
+        }
     </script>
 }
