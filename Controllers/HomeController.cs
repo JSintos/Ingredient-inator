@@ -76,16 +76,16 @@ namespace Ingredient_inator.Controllers
                     "Message:<br/><strong>" + record.Message + "</strong><br/><br/>";
                 mail.IsBodyHtml = true;
 
-                using (SmtpClient smtp = new SmtpClient())
+                using (SmtpClient SMTP = new SmtpClient())
                 {
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.EnableSsl = true;
+                    SMTP.Host = "smtp.gmail.com";
+                    SMTP.EnableSsl = true;
                     NetworkCredential NetworkCred =
                         new NetworkCredential("contact.scitechdev@gmail.com", "csb-is-2019");
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 587;
-                    smtp.Send(mail);
+                    SMTP.UseDefaultCredentials = true;
+                    SMTP.Credentials = NetworkCred;
+                    SMTP.Port = 587;
+                    SMTP.Send(mail);
                     ViewBag.Message = "Message sent.";
                 }
 

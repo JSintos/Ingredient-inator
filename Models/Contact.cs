@@ -10,22 +10,17 @@ namespace Ingredient_inator.Models
     {
         [Key]
         public int MessageId { get; set; }
-
         [Display(Name = "Sender")]
         [Required(ErrorMessage = "Please enter your name.")]
         public string SenderName { get; set; }
-
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid format.")]
-        [Required(ErrorMessage ="Please enter your email address.")]
+        [Required(ErrorMessage = "Please enter your email address.")]
         public string Email { get; set; }
-
         [Display(Name = "Contact Number")]
         public string ContactNo { get; set; }
-
         [Required(ErrorMessage = "Please write a subject.")]
         public string Subject { get; set; }
-
-        [Required(ErrorMessage = "Required.")]
+        [Required(ErrorMessage = "Please fill up the body of your message.")]
         [DataType(DataType.MultilineText)]
         public string Message { get; set; }
     }

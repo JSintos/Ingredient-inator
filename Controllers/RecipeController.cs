@@ -26,9 +26,9 @@ namespace Ingredient_inator.Controllers
 
         public IActionResult Index()
         {
-            var list = _context.Recipes.ToList();
+            var Recipes = _context.Recipes.ToList();
 
-            return View(list);
+            return View(Recipes);
         }
 
         [Authorize]
@@ -37,7 +37,7 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
-        //Ingredient-to-Recipe Generation Page
+        //Ingredient-to-recipe generation method
         //public IActionResult I2RG()
         //{
         //    var list = _context.Recipes.ToList();
@@ -75,6 +75,7 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Retrieves the recipe that has the same RecipeId as Id
             var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == Id).SingleOrDefault();
             if (FoundRecipe == null)
             {
@@ -119,7 +120,9 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Retrives the list of reviews that are under the recipe that the user is attempting to delete
             var FoundReviews = _context.Reviews.Where(R => R.RecipeId == Id).ToList();
+            // And deletes them
             foreach (Review Review in FoundReviews)
             {
                 _context.Reviews.Remove(Review);
@@ -146,7 +149,6 @@ namespace Ingredient_inator.Controllers
             }
 
             RecipeReviewViewModel RRVM = new RecipeReviewViewModel();
-
             RRVM.Recipe = FoundRecipe;
             
             var FoundReviews = _context.Reviews.Where(R => R.RecipeId == Id).ToList();
@@ -173,7 +175,7 @@ namespace Ingredient_inator.Controllers
             return View(FoundRecipe);
         }
 
-        //Ingredient-to-Recipe Generation Page
+        // Ingredient-to-recipe generation method
         public async Task<IActionResult> I2RG(string searchString)
         {
             var recipes = from r in _context.Recipes
