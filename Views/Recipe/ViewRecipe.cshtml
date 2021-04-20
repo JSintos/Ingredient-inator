@@ -98,27 +98,27 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Author)
                     </td>
-                    <td id="reviewContent">
+                    <td class="reviewContent">
                         @Html.DisplayFor(modelItem => item.Content)
                     </td>
-                    <td id="reviewRating">
+                    <td class="reviewRating">
                         @Html.DisplayFor(modelItem => item.Rating)
                     </td>
                     <form asp-action="Edit" method="post" asp-controller="Review">
                         <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
                         <td>
-                            <textarea class="d-none" id="editContent" asp-for="Content" cols="30" rows="10"></textarea>
+                            <textarea class="d-none editContent" data-reviewId="@item.ReviewId" asp-for="Content" cols="30" rows="10"></textarea>
                         </td>
                         <td>
-                            <input class="d-none" id="editRating" asp-for="Rating" type="number" value="@Html.Raw(item.Rating)">
+                            <input class="d-none editRating" data-reviewId="@item.ReviewId" asp-for="Rating" type="number" value="@Html.Raw(item.Rating)">
                         </td>
-                        <input class="d-none" id="submitUpdatedReview" type="submit" value="Update">
-                        <input class="d-none" id="cancelUpdate" type="button" value="Cancel">
+                        <input class="d-none submitUpdatedReview" data-reviewId="@item.ReviewId" type="submit" value="Update">
+                        <input class="d-none cancelUpdate" data-reviewId="@item.ReviewId" type="button" value="Cancel">
                     </form>
                     @if (ViewBag.UserId == item.Author)
                     {
                         <td>
-                            <a id="editReview" style="cursor: pointer; color: #0366d6;">Edit</a> | 
+                            <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;">Edit</a> | 
                             <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
                         </td>
                     }
@@ -132,27 +132,48 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script>
         $(document).ready(function () {
-            $("#editReview").on("click", function(){
-               $(this).addClass("d-none"); 
+            $(".editReview").on("click", function () {
+                var reviewId = $(this).attr("data-reviewId");
+                var addKeywords = [".editReview", ".reviewContent", ".reviewRating"];
+                var removeKeywords = [".editContent", ".editRating", ".submitUpdatedReview", ".cancelUpdate"];
+                
+                addKeywords.forEach(element => {
+                    $(element).each(function (i, el) {
+                        if ($(this).attr("data-reviewId") == reviewId) {
+                            $(this).addClass("d-none");
+                        }
+                    });
+                });
 
-               $("#reviewContent").addClass("d-none");
-               $("#reviewRating").addClass("d-none");
-
-               $("#editContent").removeClass("d-none");
-               $("#editRating").removeClass("d-none");
-               $("#submitUpdatedReview").removeClass("d-none");
-               $("#cancelUpdate").removeClass("d-none");
+                removeKeywords.forEach(element => {
+                    $(element).each(function (i, el) {
+                        if ($(this).attr("data-reviewId") == reviewId) {
+                            $(this).removeClass("d-none");
+                        }
+                    });
+                });
             });
 
-            $("#cancelUpdate").on("click", function(){
-                $("#editContent").addClass("d-none");
-                $("#editRating").addClass("d-none");
-                $("#submitUpdatedReview").addClass("d-none");
-                $("#cancelUpdate").addClass("d-none");
+            $(".cancelUpdate").on("click", function () {
+                var reviewId = $(this).attr("data-reviewId");
+                var addKeywords = [".editContent", ".editRating", ".submitUpdatedReview", ".cancelUpdate"];
+                var removeKeywords = [".editReview", ".reviewContent", ".reviewRating"];
 
-                $("#editReview").removeClass("d-none");
-                $("#reviewContent").removeClass("d-none");
-                $("#reviewRating").removeClass("d-none");
+                addKeywords.forEach(element => {
+                    $(element).each(function (i, el) {
+                        if ($(this).attr("data-reviewId") == reviewId) {
+                            $(this).addClass("d-none");
+                        }
+                    });
+                });
+
+                removeKeywords.forEach(element => {
+                    $(element).each(function (i, el) {
+                        if ($(this).attr("data-reviewId") == reviewId) {
+                            $(this).removeClass("d-none");
+                        }
+                    });
+                });
             });
         });
     </script>
