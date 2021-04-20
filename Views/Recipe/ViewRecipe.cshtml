@@ -112,7 +112,10 @@
                         @Html.DisplayFor(modelItem => item.Rating)
                     </td>
                     <td>
-                        @item.DateModified.Value.ToString("dd MMMM yyyy, HH:mm")
+                        @if (item.DateModified != null)
+                        {
+                            @item.DateModified.Value.ToString("dd MMMM yyyy, HH:mm")
+                        }
                     </td>
                     <td>
                         @if (item.DateModified != null)

@@ -45,6 +45,7 @@ namespace Ingredient_inator.Controllers
         //    return View(list);
         //}
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(Recipe Recipe)
         {
@@ -68,6 +69,7 @@ namespace Ingredient_inator.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Edit(int? Id)
         {
             if (Id == null)
@@ -85,6 +87,7 @@ namespace Ingredient_inator.Controllers
             return View(FoundRecipe);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(int? RecipeId, Recipe Recipe)
         {
@@ -107,6 +110,7 @@ namespace Ingredient_inator.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Delete(int? Id)
         {
             if (Id == null)
@@ -159,6 +163,7 @@ namespace Ingredient_inator.Controllers
             return View(RRVM);
         }
 
+        [Authorize]
         public IActionResult ViewShoppingList(int? Id)
         {
             if (Id == null)
