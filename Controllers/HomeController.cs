@@ -29,7 +29,9 @@ namespace Ingredient_inator.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var Recipes = _context.Recipes.ToList();
+
+            return View(Recipes);
         }
 
         public IActionResult Privacy()
