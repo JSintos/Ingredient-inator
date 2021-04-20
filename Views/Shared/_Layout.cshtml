@@ -11,7 +11,7 @@
 <body style="background-color: #d9d9d9!important;">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-             style="background-color: #828282!important;">
+             style="background-color: #575757!important;">
             <div class="container">
                 <div style="background-color: #EEDDBF;">
                     <a class="navbar-brand" style="color: #AC3931; font-weight: bold; padding: 0px; margin-left: 20px; margin-right: 20px;" asp-area="" asp-controller="Home" asp-action="Index">INGREDIENT-INATOR</a>
@@ -27,23 +27,44 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item" style="color: #ffffff !important;">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-bottom: 20%;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Ingredient_inator - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <table style="width:100%;
+                      background-color: #575757;
+                      color: #fff;">
+            <tbody style="line-height: 120%; ">
+                <tr style="text-align: center; line-height:250%;">
+                    <td style="padding-top: 20px;">Company</td>
+                    <td style="padding-top: 20px;">Browse</td>
+                    <td style="padding-top: 20px;">Customer Service</td>
+                    <td style="padding-top: 20px;">Policies</td>
+                </tr>
+                <tr style="text-align: center; font-size: 90%">
+                    <td><a href="/Home/AboutUs" style="color: #EEDDBF;">About Us</a></td>
+                    <td><a href="/Recipe/Index" style="color: #EEDDBF;">Recipes</a></td>
+                    <td><a href="/Home/Contact" style="color: #EEDDBF;">Contact Us</a></td>
+                    <td><a href="/Home/Privacy" style="color: #EEDDBF;">Privacy</a></td>
+                </tr>
+                <tr style="text-align: center; font-size: 90%">
+                    <td>Column content</td>
+                    <td>Column content</td>
+                    <td>Column content</td>
+                    <td>Column content</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="" style="background-color: #575757;color: #fff;font-size: 80%;padding-left: 50px;">
+            © 2021 - Ingredient-inator
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
