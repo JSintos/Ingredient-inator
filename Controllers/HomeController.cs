@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Ingredient_inator.Models;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Ingredient_inator.Data;
+
 using System.Net;
 using System.Net.Mail;
 
@@ -14,10 +18,12 @@ namespace Ingredient_inator.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
+            _context = context;
             _logger = logger;
         }
 
@@ -43,18 +49,32 @@ namespace Ingredient_inator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(Contact Record)
+        public IActionResult Contact(Contact record)
         {
-            // We receive this
-            using (MailMessage Mail = new MailMessage(Record.Email, "contact.scitechdev@gmail.com"))
-            {
-                Mail.Subject = "Ingredient-inator Re: Inquiry";
 
-                Mail.Body = "From: " + Record.SenderName + " " + Record.Email + "<br/>" +
-                            "Contact Number: " + Record.ContactNo + "<br/>" +
-                            "Subject: <strong>" + Record.Subject + "</strong><br/>" +
-                            "Message: <br/><br/><strong>" + Record.Message + "</strong><br/><br/>";
-                Mail.IsBodyHtml = true;
+            var NewMessage = new Contact()
+            {
+                MessageId = record.MessageId,
+                SenderName = record.SenderName,
+                Email = record.Email,
+                ContactNo = record.ContactNo,
+                Subject = record.Subject,
+                Message = record.Message
+            };
+
+            _context.Contact.Add(NewMessage);
+            _context.SaveChanges();
+
+            // we receive this
+            using (MailMessage mail = new MailMessage(record.Email, "contact.scitechdev@gmail.com"))
+            {
+                mail.Subject = "Ingredient-inator Re: Inquiry";
+
+                mail.Body = "From: " + record.SenderName + " " + record.Email + "<br/>" +
+                    "Contact Number: " + record.ContactNo + "<br/>" +
+                    "Subject: <strong>" + record.Subject + "</strong><br/>" +
+                    "Message:<br/><strong>" + record.Message + "</strong><br/><br/>";
+                mail.IsBodyHtml = true;
 
                 using (SmtpClient SMTP = new SmtpClient())
                 {
@@ -65,38 +85,40 @@ namespace Ingredient_inator.Controllers
                     SMTP.UseDefaultCredentials = true;
                     SMTP.Credentials = NetworkCred;
                     SMTP.Port = 587;
-                    SMTP.Send(Mail);
+                    SMTP.Send(mail);
                     ViewBag.Message = "Message sent.";
                 }
+
             }
 
-            // We send this
-            using (MailMessage Mail = new MailMessage("contact.scitechdev@gmail.com", Record.Email))
+            // we send this
+            using (MailMessage mail = new MailMessage("contact.scitechdev@gmail.com", record.Email))
             {
-                Mail.Subject = "Hello from Ingredient-inator!";
+                mail.Subject = "Hello from Ingredient-inator!";
 
-                Mail.Body = "Hi " + Record.SenderName + ",<br/><br/>" +
+                mail.Body = "Hi " + record.SenderName + ",<br/><br/>" +
                     "Thank you for reaching out to us! This is to confirm that we've " +
-                    "received your message and are working on our reply.<br/><br/>" +
+                    "received your message and are working on our reply.<br/>" +
                     "Here are the details of your inquiry: <br/><br/>" +
-                    "Subject: <strong>" + Record.Subject + "</strong><br/>" +
-                    "Message: <br/><br/><strong>" + Record.Message + "</strong><br/><br/>" +
+                    "Subject: <strong>" + record.Subject + "</strong><br/>" +
+                    "Message:<br/><strong>" + record.Message + "</strong><br/><br/>" +
                     "Please wait for our reply. Thank you!<br/><br/>" +
-                    "Sincerely, <br/><br/>" +
+                    "Sincerely,<br/>" +
                     "The Ingredient-inator Team<br/><br/>" +
-                    "<em>This is an automated message. Do not reply to this email.</em>" ;
-                Mail.IsBodyHtml = true;
+                    "P.S. This is an automated message." ;
+                mail.IsBodyHtml = true;
 
-                using (SmtpClient SMTP = new SmtpClient())
+                using (SmtpClient smtp = new SmtpClient())
                 {
-                    SMTP.Host = "smtp.gmail.com";
-                    SMTP.EnableSsl = true;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
                     NetworkCredential NetworkCred =
                         new NetworkCredential("contact.scitechdev@gmail.com", "csb-is-2019");
-                    SMTP.UseDefaultCredentials = true;
-                    SMTP.Credentials = NetworkCred;
-                    SMTP.Port = 587;
-                    SMTP.Send(Mail);
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mail);
+                    ViewBag.Message = "Message sent.";
                 }
             }
 
