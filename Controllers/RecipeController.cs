@@ -92,7 +92,6 @@ namespace Ingredient_inator.Controllers
         public IActionResult Edit(int? RecipeId, Recipe Recipe)
         {
             var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == RecipeId).SingleOrDefault();
-            FoundRecipe.Author = Recipe.Author;
             FoundRecipe.Name = Recipe.Name;
             FoundRecipe.Category = Recipe.Category;
             FoundRecipe.DateCreated = DateTime.Now;
