@@ -1,82 +1,69 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="~lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet">
+        
+        <link href="~/css/fonts.css" rel="stylesheet">
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet">
-    
-    <link href="~/css/site.css" rel="stylesheet">
-    <link href="~/css/fonts.css" rel="stylesheet" />
+        <link href="~/css/_layout.css" rel="stylesheet" />
+        
+        <title>@ViewData["Title"] - Ingredient-inator</title>
+    </head>
 
-    <title>@ViewData["Title"] - Ingredient-inator</title>
-</head>
-
-<body style="background-color: #d9d9d9!important;">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-             style="background-color: #575757!important;">
+    <body>
+        <nav class="navbar navbar-expand fixed-top navbar-light bg-navbar">
             <div class="container">
-                <div style="background-color: #EEDDBF;">
-                    <a class="navbar-brand" style="color: #AC3931; font-weight: bold; padding: 0px; margin-left: 20px; margin-right: 20px;" asp-area="" asp-controller="Home" asp-action="Index">INGREDIENT-INATOR</a>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">Ingredient-inator</a>
+                <button aria-controls="layoutNavbar" aria-expanded="false" class="navbar-toggler" data-target="#layoutNavbar" data-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" style="padding-left: 30px;">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1"
-                        style="font-weight: bold !important;">
+
+                <div class="collapse navbar-collapse" id="layoutNavbar">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
                         </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-auto">
+                        <partial name="_LoginPartial" />
                     </ul>
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container" style="margin-bottom: 20%;">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <table style="width:100%;
-                      background-color: #575757;
-                      color: #fff;">
-            <tbody style="line-height: 120%; ">
-                <tr style="text-align: center; line-height:250%;">
-                    <td style="padding-top: 20px;">Company</td>
-                    <td style="padding-top: 20px;">Browse</td>
-                    <td style="padding-top: 20px;">Customer Service</td>
-                    <td style="padding-top: 20px;">Policies</td>
-                </tr>
-                <tr style="text-align: center; font-size: 90%">
-                    <td><a href="/Home/AboutUs" style="color: #EEDDBF;">About Us</a></td>
-                    <td><a href="/Recipe/Index" style="color: #EEDDBF;">Recipes</a></td>
-                    <td><a href="/Home/Contact" style="color: #EEDDBF;">Contact Us</a></td>
-                    <td><a href="/Home/Privacy" style="color: #EEDDBF;">Privacy</a></td>
-                </tr>
-                <tr style="text-align: center; font-size: 90%">
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="" style="background-color: #575757;color: #fff;font-size: 80%;padding-left: 50px;">
-            © 2021 - Ingredient-inator
+        <div class="container">
+            @RenderBody()
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+
+        <footer class="text-center p-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <a href="/Home/AboutUs">ABOUT US</a>
+                    </div>
+                    
+                    <div class="col">
+                        <a href="/Home/Privacy">PRIVACY POLICY</a>
+                    </div>
+
+                    <div class="col">
+                        <a href="/Home/Contact">CONTACT US</a>
+                    </div>
+                </div>
+
+                <div class="mt-4">&copy; 2021 Ingredient-inator</div>
+            </div>
+        </footer>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>
