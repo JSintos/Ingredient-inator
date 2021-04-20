@@ -22,16 +22,15 @@ namespace Ingredient_inator.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
+        
         public IActionResult Index()
         {
             var Categories = _context.Categories.ToList();
 
-            ViewBag.UserId = _userManager.GetUserId(User);
-
             return View(Categories);
         }
 
+        [Authorize]
         public IActionResult New()
         {
             return View();
@@ -59,6 +58,7 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Retrieves the category that has the same CategoryId as Id
             var FoundCategory = _context.Categories.Where(C => C.CategoryId == Id).SingleOrDefault();
             if (FoundCategory == null)
             {
@@ -93,7 +93,9 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Retrives the list of recipes that are under the category that the user is attempting to delete
             var FoundRecipes = _context.Recipes.Where(R => R.Category == Id).ToList();
+            // And disassociates them with it 
             foreach (Recipe Recipe in FoundRecipes)
             {
                 Recipe.Category = -999;
@@ -120,7 +122,6 @@ namespace Ingredient_inator.Controllers
             }
 
             CategoryRecipeViewModel CRVM = new CategoryRecipeViewModel();
-
             CRVM.Category = FoundCategory;
 
             var FoundRecipes = _context.Recipes.Where(R => R.Category == Id).ToList();

@@ -43,61 +43,60 @@ namespace Ingredient_inator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(Contact record)
+        public IActionResult Contact(Contact Record)
         {
-            // we receive this
-            using (MailMessage mail = new MailMessage(record.Email, "contact.scitechdev@gmail.com"))
+            // We receive this
+            using (MailMessage Mail = new MailMessage(Record.Email, "contact.scitechdev@gmail.com"))
             {
-                mail.Subject = "Ingredient-inator Re: Inquiry";
+                Mail.Subject = "Ingredient-inator Re: Inquiry";
 
-                mail.Body = "From: " + record.SenderName + " " + record.Email + "<br/>" +
-                    "Contact Number: " + record.ContactNo + "<br/>" +
-                    "Subject: <strong>" + record.Subject + "</strong><br/>" +
-                    "Message:<br/><strong>" + record.Message + "</strong><br/><br/>";
-                mail.IsBodyHtml = true;
+                Mail.Body = "From: " + Record.SenderName + " " + Record.Email + "<br/>" +
+                            "Contact Number: " + Record.ContactNo + "<br/>" +
+                            "Subject: <strong>" + Record.Subject + "</strong><br/>" +
+                            "Message: <br/><br/><strong>" + Record.Message + "</strong><br/><br/>";
+                Mail.IsBodyHtml = true;
 
-                using (SmtpClient smtp = new SmtpClient())
+                using (SmtpClient SMTP = new SmtpClient())
                 {
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.EnableSsl = true;
+                    SMTP.Host = "smtp.gmail.com";
+                    SMTP.EnableSsl = true;
                     NetworkCredential NetworkCred =
                         new NetworkCredential("contact.scitechdev@gmail.com", "csb-is-2019");
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 587;
-                    smtp.Send(mail);
+                    SMTP.UseDefaultCredentials = true;
+                    SMTP.Credentials = NetworkCred;
+                    SMTP.Port = 587;
+                    SMTP.Send(Mail);
                     ViewBag.Message = "Message sent.";
                 }
             }
 
-            // we send this
-            using (MailMessage mail = new MailMessage("contact.scitechdev@gmail.com", record.Email))
+            // We send this
+            using (MailMessage Mail = new MailMessage("contact.scitechdev@gmail.com", Record.Email))
             {
-                mail.Subject = "Hello from Ingredient-inator!";
+                Mail.Subject = "Hello from Ingredient-inator!";
 
-                mail.Body = "Hi " + record.SenderName + ",<br/><br/>" +
+                Mail.Body = "Hi " + Record.SenderName + ",<br/><br/>" +
                     "Thank you for reaching out to us! This is to confirm that we've " +
-                    "received your message and are working on our reply.<br/>" +
+                    "received your message and are working on our reply.<br/><br/>" +
                     "Here are the details of your inquiry: <br/><br/>" +
-                    "Subject: <strong>" + record.Subject + "</strong><br/>" +
-                    "Message:<br/><strong>" + record.Message + "</strong><br/><br/>" +
+                    "Subject: <strong>" + Record.Subject + "</strong><br/>" +
+                    "Message: <br/><br/><strong>" + Record.Message + "</strong><br/><br/>" +
                     "Please wait for our reply. Thank you!<br/><br/>" +
-                    "Sincerely,<br/>" +
+                    "Sincerely, <br/><br/>" +
                     "The Ingredient-inator Team<br/><br/>" +
-                    "P.S. This is an automated message." ;
-                mail.IsBodyHtml = true;
+                    "<em>This is an automated message. Do not reply to this email.</em>" ;
+                Mail.IsBodyHtml = true;
 
-                using (SmtpClient smtp = new SmtpClient())
+                using (SmtpClient SMTP = new SmtpClient())
                 {
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.EnableSsl = true;
+                    SMTP.Host = "smtp.gmail.com";
+                    SMTP.EnableSsl = true;
                     NetworkCredential NetworkCred =
                         new NetworkCredential("contact.scitechdev@gmail.com", "csb-is-2019");
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 587;
-                    smtp.Send(mail);
-                    ViewBag.Message = "Message sent.";
+                    SMTP.UseDefaultCredentials = true;
+                    SMTP.Credentials = NetworkCred;
+                    SMTP.Port = 587;
+                    SMTP.Send(Mail);
                 }
             }
 

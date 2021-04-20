@@ -49,14 +49,11 @@ namespace Ingredient_inator.Controllers
         [HttpPost]
         public IActionResult Edit(Review Review)
         {
-            System.Diagnostics.Debug.WriteLine("Here! -> " + Review.Content);
-            System.Diagnostics.Debug.WriteLine("Here! -> " + Review.Rating);
-
             var FoundReview = _context.Reviews.Where(R => R.ReviewId == Review.ReviewId).SingleOrDefault();
+            FoundReview.DateModified = DateTime.Now;
             FoundReview.Content = Review.Content;
             FoundReview.Rating = Review.Rating;
-            FoundReview.DateModified = DateTime.Now;
-
+            
             _context.Reviews.Update(FoundReview);
             _context.SaveChanges();
 
