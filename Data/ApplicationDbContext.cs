@@ -17,7 +17,6 @@ namespace Ingredient_inator.Data
 
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Checklist> Checklists { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Contact> Contact { get; set; }
     }
