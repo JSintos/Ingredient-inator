@@ -89,6 +89,9 @@
                 <th>
                     Rating
                 </th>
+                <th>
+                    Edited?
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -103,6 +106,16 @@
                     </td>
                     <td class="reviewRating">
                         @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @if (item.DateModified != null)
+                        {
+                            <p>Yes</p>
+                        }
+                        else
+                        {
+                            <p>No</p>
+                        }
                     </td>
                     <form asp-action="Edit" method="post" asp-controller="Review">
                         <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
