@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Ingredient_inator.Models;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Ingredient_inator.Data;
+
 using System.Net;
 using System.Net.Mail;
 
@@ -14,10 +18,12 @@ namespace Ingredient_inator.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
+            _context = context;
             _logger = logger;
         }
 
@@ -45,6 +51,20 @@ namespace Ingredient_inator.Controllers
         [HttpPost]
         public IActionResult Contact(Contact record)
         {
+
+            var NewMessage = new Contact()
+            {
+                MessageId = record.MessageId,
+                SenderName = record.SenderName,
+                Email = record.Email,
+                ContactNo = record.ContactNo,
+                Subject = record.Subject,
+                Message = record.Message
+            };
+
+            _context.Contact.Add(NewMessage);
+            _context.SaveChanges();
+
             // we receive this
             using (MailMessage mail = new MailMessage(record.Email, "contact.scitechdev@gmail.com"))
             {
@@ -68,6 +88,7 @@ namespace Ingredient_inator.Controllers
                     smtp.Send(mail);
                     ViewBag.Message = "Message sent.";
                 }
+
             }
 
             // we send this
