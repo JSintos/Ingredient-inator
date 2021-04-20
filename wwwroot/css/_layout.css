@@ -1,0 +1,35 @@
+body {
+    background-color: #FEF9E7;
+    font-family: 'Raleway';
+    font-weight: 500;
+}
+
+body > .container {
+    padding-top: 100px;
+}
+
+.bg-navbar {
+    background-color: #EDE7D1;
+    border-bottom: solid #E6DFC5;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #212F3D;
+}
+
+#logout {
+    font-family: 'Raleway';
+    font-weight: 500;
+}
+
+footer {
+    color: #B3B3B3;
+    background-color: #333333;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #89A39E;
+}
