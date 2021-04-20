@@ -46,6 +46,7 @@ namespace Ingredient_inator.Controllers
             return Redirect("~/Recipe/Index");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(Review Review)
         {
@@ -60,6 +61,7 @@ namespace Ingredient_inator.Controllers
             return Redirect("~/Recipe/Index");
         }
 
+        [Authorize]
         public IActionResult Delete(int? Id)
         {
             if (Id == null)

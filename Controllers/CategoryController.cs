@@ -36,6 +36,7 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(Category Category)
         {
@@ -51,6 +52,7 @@ namespace Ingredient_inator.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Edit(int? Id)
         {
             if (Id == null)
@@ -68,6 +70,7 @@ namespace Ingredient_inator.Controllers
             return View(FoundCategory);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Update(int? CategoryId, Category Category)
         {
@@ -80,6 +83,7 @@ namespace Ingredient_inator.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Delete(int? Id)
         {
             if (Id == null)
