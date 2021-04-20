@@ -1,0 +1,159 @@
+﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
+@model Ingredient_inator.Models.RecipeReviewViewModel
+@{
+    ViewData["Title"] = "ViewRecipe";
+}
+
+<div>
+    <h2 style="text-transform: uppercase;
+               color: #AC3931;
+               font-weight: bold;">
+        @Html.DisplayFor(model => model.Recipe.Name)
+    </h2>
+
+    @if (ViewBag.UserId == Model.Recipe.Author)
+    {
+
+        <p>
+            <a asp-action="Edit" asp-route-id="@Model.Recipe.RecipeId">Edit</a> |
+            <a asp-action="Delete" asp-route-id="@Model.Recipe.RecipeId" onclick='return confirm("Are you sure?")'>Delete</a>
+        </p>
+
+    }
+    <a asp-action="Index">Back to List</a>
+
+    <h4 style="text-transform: uppercase; font-weight: bold;">
+        BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Recipe.Author)</a>
+    </h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            Ingredients
+        </dt>
+        <dt class="col-sm-4">
+            Instructions
+        </dt>
+        <dt class="col-sm-4">
+            Photo
+        </dt>
+    </dl>
+    <dl class="row">
+        <dd class="col-sm-1" style="text-align: right;">
+            @Html.Raw(Model.Recipe.PortionList.Replace(",", "<br/>"))
+        </dd>
+        <dd class="col-sm-2">
+            @Html.Raw(Model.Recipe.IngredientList.Replace(",", "<br/>"))
+        </dd>
+        <dd class="col-sm-1"></dd>
+        <dd class="col-sm-4">
+            @Html.Raw(Model.Recipe.Steps.Replace(";", "<br/>"))
+        </dd>
+        <dd class="col-sm-4">
+            Photo:
+            @Html.DisplayFor(model => model.Recipe.PhotoLink)
+            <br />
+            Video:
+            @Html.DisplayFor(model => model.Recipe.VideoLink)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dd class="col-sm-4">
+            <p>
+                <a asp-action="ViewShoppingList" asp-route-id="@Model.Recipe.RecipeId" target="external">Print as Shopping List</a>
+            </p>
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h1>Leave a review</h1>
+    <br />
+    <form asp-action="Create" method="post" asp-controller="Review">
+        <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
+        <input type="text" asp-for="Content" value="" placeholder="Content" />
+        <input type="text" asp-for="Rating" value="" placeholder="Rating" />
+        <input type="submit" name="submitReview" value="Submit review" />
+    </form>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Content
+                </th>
+                <th>
+                    Rating
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Reviews)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td id="reviewContent">
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td id="reviewRating">
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <form asp-action="Edit" method="post" asp-controller="Review">
+                        <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
+                        <td>
+                            <textarea class="d-none" id="editContent" asp-for="Content" cols="30" rows="10"></textarea>
+                        </td>
+                        <td>
+                            <input class="d-none" id="editRating" asp-for="Rating" type="number" value="@Html.Raw(item.Rating)">
+                        </td>
+                        <input class="d-none" id="submitUpdatedReview" type="submit" value="Update">
+                        <input class="d-none" id="cancelUpdate" type="button" value="Cancel">
+                    </form>
+                    @if (ViewBag.UserId == item.Author)
+                    {
+                        <td>
+                            <a id="editReview" style="cursor: pointer; color: #0366d6;">Edit</a> | 
+                            <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#editReview").on("click", function(){
+               $(this).addClass("d-none"); 
+
+               $("#reviewContent").addClass("d-none");
+               $("#reviewRating").addClass("d-none");
+
+               $("#editContent").removeClass("d-none");
+               $("#editRating").removeClass("d-none");
+               $("#submitUpdatedReview").removeClass("d-none");
+               $("#cancelUpdate").removeClass("d-none");
+            });
+
+            $("#cancelUpdate").on("click", function(){
+                $("#editContent").addClass("d-none");
+                $("#editRating").addClass("d-none");
+                $("#submitUpdatedReview").addClass("d-none");
+                $("#cancelUpdate").addClass("d-none");
+
+                $("#editReview").removeClass("d-none");
+                $("#reviewContent").removeClass("d-none");
+                $("#reviewRating").removeClass("d-none");
+            });
+        });
+    </script>
+}

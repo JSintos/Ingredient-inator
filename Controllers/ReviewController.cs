@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Ingredient_inator.Data;
+using Ingredient_inator.Models;
+
+namespace Ingredient_inator.Controllers
+{
+    public class ReviewController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public ReviewController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Create(RecipeReviewViewModel RRVM)
+        {
+            var NewReview = new Review()
+            {
+                RecipeId = RRVM.RecipeId,
+                Author = _userManager.GetUserId(User),
+                DatePosted = DateTime.Now,
+                Content = RRVM.Content,
+                Rating = RRVM.Rating
+            };
+
+            _context.Reviews.Add(NewReview);
+            _context.SaveChanges();
+
+            return Redirect("~/Recipe/Index");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Review Review)
+        {
+            System.Diagnostics.Debug.WriteLine("Here! -> " + Review.Content);
+            System.Diagnostics.Debug.WriteLine("Here! -> " + Review.Rating);
+
+            var FoundReview = _context.Reviews.Where(R => R.ReviewId == Review.ReviewId).SingleOrDefault();
+            FoundReview.Content = Review.Content;
+            FoundReview.Rating = Review.Rating;
+            FoundReview.DateModified = DateTime.Now;
+
+            _context.Reviews.Update(FoundReview);
+            _context.SaveChanges();
+
+            return Redirect("~/Recipe/Index");
+        }
+
+        public IActionResult Delete(int? Id)
+        {
+            if (Id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var FoundReview = _context.Reviews.Where(R => R.ReviewId == Id).SingleOrDefault();
+            if (FoundReview == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            _context.Reviews.Remove(FoundReview);
+            _context.SaveChanges();
+
+            return Redirect("~/Recipe/Index");
+        }       
+    }
+}

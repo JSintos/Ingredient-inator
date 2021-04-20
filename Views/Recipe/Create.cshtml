@@ -1,0 +1,90 @@
+﻿@model Ingredient_inator.Models.Recipe
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Recipe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServingSize" class="control-label"></label>
+                <input asp-for="ServingSize" class="form-control" />
+                <span asp-validation-for="ServingSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PortionList" class="control-label"></label>
+                <textarea asp-for="PortionList" class="form-control"></textarea>
+                <span asp-validation-for="PortionList" class="text-danger"></span>
+            </div>
+            @*<br />*@
+            <div class="form-group">
+                <label asp-for="IngredientList" class="control-label"></label>
+                <textarea asp-for="IngredientList" class="form-control"></textarea>
+                <span asp-validation-for="IngredientList" class="text-danger"></span>
+            </div>
+
+            @*<div id="input" class="panel-body">
+                <div class="input-group">
+                    <input name="add-to-list" type="text" class="form-control" placeholder="Add Ingredient..." />
+                    <span class="input-group-btn"><button id="add" class="btn btn-primary">Add</button></span>
+                </div>
+                <br />
+                <div class="btn-group">
+                    <button id="clear" class="btn btn-danger">Clear List</button>
+                </div>
+            </div>
+            <div id="script-error" class="panel-body bg-warning text-warning">
+                <span class="glyphicon glyphicon-exclamation-sign"></span> Javascript isn't working correctly on your computer! The To-Do List cannot function properly!
+            </div>
+            <br />*@
+
+            <div class="form-group">
+                <label asp-for="Steps" class="control-label"></label>
+                <textarea asp-for="Steps" class="form-control"></textarea>
+                <span asp-validation-for="Steps" class="text-danger"></span>
+            </div>
+            @*<br />*@
+
+            <div class="form-group">
+                <label asp-for="PhotoLink" class="control-label"></label>
+                <input asp-for="PhotoLink" class="form-control" />
+                <span asp-validation-for="PhotoLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VideoLink" class="control-label"></label>
+                <input asp-for="VideoLink" class="form-control" />
+                <span asp-validation-for="VideoLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
+    <script src="~/lib/todolist/js/script.js"></script>
+}
