@@ -1,3 +1,13 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background-color: #FEF9E7;
     font-family: 'Raleway';
@@ -5,7 +15,9 @@ body {
 }
 
 body > .container {
-    padding-top: 100px;
+    margin-bottom: 100px;
+    padding-top: 75px;
+    min-height: 100%;
 }
 
 .bg-navbar {
@@ -25,9 +37,9 @@ body > .container {
 footer {
     color: #B3B3B3;
     background-color: #333333;
+    width: 100%;
     position: absolute;
     bottom: 0;
-    width: 100%;
 }
 
 footer a {
