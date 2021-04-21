@@ -1,4 +1,7 @@
-﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject Ingredient_inator.Data.ApplicationDbContext _context;
+@inject SignInManager<ApplicationUser> SignInManager
 @model Ingredient_inator.Models.RecipeReviewViewModel
 @{
     ViewData["Title"] = "ViewRecipe";
@@ -68,18 +71,19 @@
         </dd>
     </dl>
 </div>
-
-<div id="hide2">
-    <h1>Leave a review</h1>
-    <br />
-    <form asp-action="Create" method="post" asp-controller="Review" id="toHide">
-        <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
-        <input type="text" asp-for="Content" value="" placeholder="Content" />
-        <input type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating" />
-        <input type="submit" name="submitReview" value="Submit review" />
-    </form>
-</div>
-
+@if (SignInManager.IsSignedIn(User))
+{
+    <div id="hide2">
+        <h1>Leave a review</h1>
+        <br />
+        <form asp-action="Create" method="post" asp-controller="Review" id="toHide">
+            <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
+            <input type="text" asp-for="Content" value="" placeholder="Content" />
+            <input type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating" />
+            <input type="submit" name="submitReview" value="Submit review" />
+        </form>
+    </div>
+}
 <div id="hide3">
     <table class="table">
         <thead>
@@ -134,9 +138,11 @@
                         <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
                         <td>
                             <textarea class="d-none editContent" data-reviewId="@item.ReviewId" asp-for="Content" cols="30" rows="10"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
                         </td>
                         <td>
-                            <input class="d-none editRating" data-reviewId="@item.ReviewId" asp-for="Rating" type="number" value="@Html.Raw(item.Rating)">
+                            <input class="d-none editRating" data-reviewId="@item.ReviewId" asp-for="Rating" type="number" min="1" max="5" value="@Html.Raw(item.Rating)">
+                            <span asp-validation-for="Rating" class="text-danger"></span>
                         </td>
                         <input class="d-none submitUpdatedReview" data-reviewId="@item.ReviewId" type="submit" value="Update">
                         <input class="d-none cancelUpdate" data-reviewId="@item.ReviewId" type="button" value="Cancel">
@@ -144,7 +150,7 @@
                     @if (ViewBag.UserId == item.Author)
                     {
                         <td>
-                            <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;">Edit</a> | 
+                            <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;">Edit</a> |
                             <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
                         </td>
                     }
@@ -162,7 +168,7 @@
                 var reviewId = $(this).attr("data-reviewId");
                 var addKeywords = [".editReview", ".reviewContent", ".reviewRating"];
                 var removeKeywords = [".editContent", ".editRating", ".submitUpdatedReview", ".cancelUpdate"];
-                
+
                 addKeywords.forEach(element => {
                     $(element).each(function (i, el) {
                         if ($(this).attr("data-reviewId") == reviewId) {

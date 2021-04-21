@@ -3,7 +3,7 @@
     ViewData["Title"] = "ViewCategory";
 }
 
-<h1>ViewCategory</h1>
+<h1>View Category</h1>
 
 <div>
     <h4>
@@ -43,7 +43,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Category.CategoryId">Edit</a> |
-    <a asp-action="Delete" asp-route-id="@Model.Category.CategoryId" onclick='return confirm("Are you sure?")'>Delete</a>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Category.CategoryId">Edit Category</a> |
+    <a asp-action="Delete" asp-route-id="@Model.Category.CategoryId" onclick='return confirm("Are you sure?")'>Delete Category</a> |
+    <a asp-action="Index">Back to Categories List</a>
 </div>
