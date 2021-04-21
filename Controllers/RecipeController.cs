@@ -94,7 +94,6 @@ namespace Ingredient_inator.Controllers
             var FoundRecipe = _context.Recipes.Where(R => R.RecipeId == RecipeId).SingleOrDefault();
             FoundRecipe.Name = Recipe.Name;
             FoundRecipe.Category = Recipe.Category;
-            FoundRecipe.DateCreated = DateTime.Now;
             FoundRecipe.DateModified = DateTime.Now;
             FoundRecipe.ServingSize = Recipe.ServingSize;
             FoundRecipe.PortionList = Recipe.PortionList;
