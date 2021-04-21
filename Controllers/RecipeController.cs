@@ -49,6 +49,7 @@ namespace Ingredient_inator.Controllers
         [HttpPost]
         public IActionResult Create(Recipe Recipe)
         {
+
             var NewRecipe = new Recipe()
             {
                 Author = _userManager.GetUserId(User),
@@ -62,6 +63,11 @@ namespace Ingredient_inator.Controllers
                 PhotoLink = Recipe.PhotoLink,
                 VideoLink = Recipe.VideoLink
             };
+
+            if (Recipe.VideoLink != null)
+            {
+                NewRecipe.VideoLink = "https://www.youtube.com/embed/" + Recipe.VideoLink;
+            }
 
             _context.Recipes.Add(NewRecipe);
             _context.SaveChanges();
