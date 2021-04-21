@@ -11,6 +11,8 @@
         <link href="~/css/fonts.css" rel="stylesheet">
 
         <link href="~/css/_layout.css" rel="stylesheet" />
+
+        @RenderSection("Styles", required: false)
         
         <title>@ViewData["Title"] - Ingredient-inator</title>
     </head>
@@ -37,29 +39,31 @@
             </div>
         </nav>
 
-        <div class="container">
-            @RenderBody()
-        </div>
-        
-        <footer class="text-center p-3">
+        <div class="flex-wrapper">
             <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <a href="/Home/AboutUs">ABOUT US</a>
-                    </div>
-                    
-                    <div class="col">
-                        <a href="/Home/Privacy">PRIVACY POLICY</a>
-                    </div>
-
-                    <div class="col">
-                        <a href="/Home/Contact">CONTACT US</a>
-                    </div>
-                </div>
-
-                <div class="mt-4">&copy; 2021 Ingredient-inator</div>
+                @RenderBody()
             </div>
-        </footer>
+            
+            <footer class="text-center p-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <a class="text-decoration-none" href="/Home/AboutUs">ABOUT US</a>
+                        </div>
+                        
+                        <div class="col">
+                            <a class="text-decoration-none" href="/Home/Privacy">PRIVACY POLICY</a>
+                        </div>
+    
+                        <div class="col">
+                            <a class="text-decoration-none" href="/Home/Contact">CONTACT US</a>
+                        </div>
+                    </div>
+    
+                    <div class="mt-4">&copy; 2021 Ingredient-inator</div>
+                </div>
+            </footer>
+        </div>
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

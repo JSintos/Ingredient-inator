@@ -14,9 +14,16 @@ body {
     font-weight: 500;
 }
 
-body > .container {
-    margin-bottom: 100px;
+.flex-wrapper {
     padding-top: 75px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+body > .container {
+    margin-bottom: 50px;
     min-height: 100%;
 }
 
@@ -37,9 +44,6 @@ body > .container {
 footer {
     color: #B3B3B3;
     background-color: #333333;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
 }
 
 footer a {
