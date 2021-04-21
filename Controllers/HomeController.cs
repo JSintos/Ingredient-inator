@@ -19,11 +19,13 @@ namespace Ingredient_inator.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, ILogger<HomeController> logger)
         {
             _context = context;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -50,6 +52,7 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Contact(Contact record)
         {
@@ -130,6 +133,25 @@ namespace Ingredient_inator.Controllers
         public IActionResult AboutUs()
         {
             return View();
+        }
+
+        [Authorize]
+        public ActionResult Profile()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            EntityViewModel entityViewModel = new EntityViewModel();
+
+            // This retrieves all entities created by the current logged in user
+            var FoundCategories = _context.Categories.Where(C => C.Author == userId).ToList();
+            var FoundRecipes = _context.Recipes.Where(R => R.Author == userId).ToList();
+            var FoundReviews = _context.Reviews.Where(R => R.Author == userId).ToList();
+
+            entityViewModel.Categories = FoundCategories;
+            entityViewModel.Recipes = FoundRecipes;
+            entityViewModel.Reviews = FoundReviews;
+
+            return View(entityViewModel);
         }
     }
 }
