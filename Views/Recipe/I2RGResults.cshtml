@@ -1,0 +1,119 @@
+﻿@model Ingredient_inator.Models.I2RGViewModel
+@{
+    ViewData["Title"] = "I2RG";
+}
+
+<h1>Ingredient-to-Recipe Generation</h1>
+
+<form asp-controller="Recipe" asp-action="I2RGResults">
+    <p>
+        Ingredients: <input type="text" name="SearchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Serving Size
+            </th>
+            <th>
+                Portion List
+            </th>
+            <th>
+                Ingredient List
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FoundRecipes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServingSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PortionList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientList)
+                </td>
+                <td>
+                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br>
+<hr>
+<br>
+@if (Model.IncompleteRecipes.Count == 1)
+{
+    <p>You can create this recipe however you're missing an ingredient!</p>
+}
+else
+{
+    <p>You can create this recipe however you're missing an ingredient!</p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Serving Size
+            </th>
+            <th>
+                Portion List
+            </th>
+            <th>
+                Ingredient List
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.IncompleteRecipes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServingSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PortionList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientList)
+                </td>
+                <td>
+                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
