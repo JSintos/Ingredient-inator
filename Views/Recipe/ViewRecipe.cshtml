@@ -77,9 +77,9 @@
         <h1>Leave a review</h1>
         <br />
         <form asp-action="Create" method="post" asp-controller="Review" id="toHide">
-            <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
-            <input type="text" asp-for="Content" value="" placeholder="Content" />
-            <input type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating" />
+            <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)"/>
+            <input type="text" asp-for="Content" value="" placeholder="Content" required/>
+            <input type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating (1-5)" required />
             <input type="submit" name="submitReview" value="Submit review" />
         </form>
     </div>
@@ -138,20 +138,23 @@
                         <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
                         <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
                         <td>
-                            <textarea class="d-none editContent" data-reviewId="@item.ReviewId" asp-for="Content" cols="30" rows="10"></textarea>
+                            <textarea class="d-none editContent" data-reviewId="@item.ReviewId" asp-for="Content" cols="30" rows="10" value="@Html.Raw(item.Content)" required></textarea>
                             <span asp-validation-for="Content" class="text-danger"></span>
                         </td>
                         <td>
-                            <input class="d-none editRating" data-reviewId="@item.ReviewId" asp-for="Rating" type="number" min="1" max="5" value="@Html.Raw(item.Rating)">
+                            <input class="d-none editRating" data-reviewId="@item.ReviewId" asp-for="Rating" type="number" min="1" max="5" value="@Html.Raw(item.Rating)" required>
                             <span asp-validation-for="Rating" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input class="d-none submitUpdatedReview" data-reviewId="@item.ReviewId" type="submit" value="Update">
+                            <input class="d-none cancelUpdate" data-reviewId="@item.ReviewId" type="button" value="Cancel">
                         </td>
                     </form>
                     @if (ViewBag.UserId == item.Author)
                     {
                 <td>
                     <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;">Edit</a>
-                    <input class="d-none submitUpdatedReview" data-reviewId="@item.ReviewId" type="submit" value="Update">
-                    <input class="d-none cancelUpdate" data-reviewId="@item.ReviewId" type="button" value="Cancel"> |
+                     |
                     <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
                 </td>
                     }
