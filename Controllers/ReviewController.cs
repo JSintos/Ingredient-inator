@@ -31,6 +31,7 @@ namespace Ingredient_inator.Controllers
         [HttpPost]
         public IActionResult Create(RecipeReviewViewModel RRVM)
         {
+            var recipeID = RRVM.RecipeId;
             var NewReview = new Review()
             {
                 RecipeId = RRVM.RecipeId,
@@ -43,13 +44,14 @@ namespace Ingredient_inator.Controllers
             _context.Reviews.Add(NewReview);
             _context.SaveChanges();
 
-            return Redirect("~/Recipe/Index");
+            return Redirect("~/Recipe/ViewRecipe/" + recipeID);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(Review Review)
+        public IActionResult Edit(Review Review, RecipeReviewViewModel RRVM)
         {
+            var recipeID = RRVM.RecipeId;
             var FoundReview = _context.Reviews.Where(R => R.ReviewId == Review.ReviewId).SingleOrDefault();
             FoundReview.DateModified = DateTime.Now;
             FoundReview.Content = Review.Content;
@@ -58,7 +60,7 @@ namespace Ingredient_inator.Controllers
             _context.Reviews.Update(FoundReview);
             _context.SaveChanges();
 
-            return Redirect("~/Recipe/Index");
+            return Redirect("~/Recipe/ViewRecipe/" + recipeID);
         }
 
         [Authorize]
