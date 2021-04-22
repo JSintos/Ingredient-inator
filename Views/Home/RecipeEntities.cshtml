@@ -5,7 +5,19 @@
 }
 
 @section Styles {
-    <link href="~/css/entities.css" rel="stylesheet">
+    <style>
+        .thead-red {
+            background-color: #AC3931;
+        }
+
+        .btn-red, .btn-red:active, .btn-red:visited {
+            background-color: #AC3931;
+        }
+
+            .btn-red:hover {
+                background-color: #D64C42;
+            }
+    </style>
 }
 
 <h1>Recipes</h1>
@@ -72,3 +84,13 @@
         </div>
     }
 </div>
+
+@section Scripts{
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#recipes').DataTable();
+        });
+    </script>
+}
