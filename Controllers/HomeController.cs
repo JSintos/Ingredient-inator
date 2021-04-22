@@ -41,16 +41,23 @@ namespace Ingredient_inator.Controllers
 
             var FoundRecipes = _context.Recipes.ToList();
 
-            int Index = 0;
-            List<Recipe> Recipes = new List<Recipe>();
-            for (int Counter = 0; Counter < 5; Counter++)
+            if (FoundRecipes.Count < 5)
             {
-                Index = Random.Next(FoundRecipes.Count);
-                Recipes.Add(FoundRecipes[Index]);
-                FoundRecipes.RemoveAt(Index);
+                return View(FoundRecipes);
             }
+            else
+            {
+                int Index = 0;
+                List<Recipe> Recipes = new List<Recipe>();
+                for (int Counter = 0; Counter < 5; Counter++)
+                {
+                    Index = Random.Next(FoundRecipes.Count);
+                    Recipes.Add(FoundRecipes[Index]);
+                    FoundRecipes.RemoveAt(Index);
+                }
 
-            return View(Recipes);
+                return View(Recipes);
+            }
         }
 
         public IActionResult AboutUs()

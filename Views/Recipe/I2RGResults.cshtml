@@ -1,119 +1,132 @@
-﻿@model Ingredient_inator.Models.I2RGViewModel
+﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
+@model Ingredient_inator.Models.I2RGViewModel
 @{
-    ViewData["Title"] = "I2RG";
+    ViewData["Title"] = "Search results";
 }
 
-<h1>Ingredient-to-Recipe Generation</h1>
-
-<form asp-controller="Recipe" asp-action="I2RGResults">
-    <p>
-        Ingredients: <input type="text" name="SearchString" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                Serving Size
-            </th>
-            <th>
-                Portion List
-            </th>
-            <th>
-                Ingredient List
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.FoundRecipes)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServingSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PortionList)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IngredientList)
-                </td>
-                <td>
-                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">Details</a>
-                </td>
-            </tr>
+@section Styles {
+    <style>
+        h1 {
+            display: inline-block;
+            vertical-align: middle;
         }
-    </tbody>
-</table>
-<br>
-<hr>
-<br>
+
+        .thead-red {
+            background-color: #AC3931;
+        }
+
+        .btn-red, .btn-red:active, .btn-red:visited {
+            background-color: #AC3931;
+        }
+
+            .btn-red:hover {
+                background-color: #D64C42;
+            }
+    </style>
+}
+
+<div class="mb-3">
+    <h1>Ingredient-to-recipe search results</h1>
+
+    <a asp-action="I2RG" asp-controller="Recipe" class="btn btn-red text-light ml-3">Search again</a>
+</div>
+
+@if (Model.FoundRecipes.Count != 0)
+{
+    <table class="table table-hover mt-3" id="recipes">
+        <thead class="thead-red">
+            <tr>
+                <th class="text-light">Name</th>
+                <th class="text-light">Category</th>
+                <th class="text-light">Serving Size</th>
+                <th class="text-light">Portion List</th>
+                <th class="text-light">Ingredient List</th>
+                <th class="text-light">Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FoundRecipes)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+
+                    @{
+                        var Category = _context.Categories.Where(C => C.CategoryId == item.Category).SingleOrDefault();
+                    }
+
+                    <td>
+                        @if (Category != null)
+                        {
+                            <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.Category">@Category.Name</a>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.ServingSize)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PortionList)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IngredientList)</td>
+                    <td>
+                        <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="text-decoration-none">
+                            <i class="far fa-eye fa-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 @if (Model.IncompleteRecipes.Count == 1)
 {
-    <p>You can create this recipe however you're missing an ingredient!</p>
+    <p class="mt-5">You can create this recipe however you're missing an ingredient!</p>
 }
 else
 {
-    <p>You can create this recipe however you're missing an ingredient!</p>
+    <p class="mt-5">You can create these recipes however you're missing an ingredient!</p>
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                Serving Size
-            </th>
-            <th>
-                Portion List
-            </th>
-            <th>
-                Ingredient List
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.IncompleteRecipes)
-        {
+
+@if (Model.IncompleteRecipes.Count != 0)
+{
+    <table class="table table-hover mt-3" id="recipes">
+        <thead class="thead-red">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServingSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PortionList)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IngredientList)
-                </td>
-                <td>
-                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">Details</a>
-                </td>
+                <th class="text-light">Name</th>
+                <th class="text-light">Category</th>
+                <th class="text-light">Serving Size</th>
+                <th class="text-light">Portion List</th>
+                <th class="text-light">Ingredient List</th>
+                <th class="text-light">Operations</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.IncompleteRecipes)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+
+                    @{
+                        var Category = _context.Categories.Where(C => C.CategoryId == item.Category).SingleOrDefault();
+                    }
+
+                    <td>
+                        @if (Category != null)
+                        {
+                            <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.Category">@Category.Name</a>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.ServingSize)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PortionList)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IngredientList)</td>
+                    <td>
+                        <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="text-decoration-none">
+                            <i class="far fa-eye fa-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.FoundRecipes.Count == 0 && Model.IncompleteRecipes.Count == 0)
+{
+    <p class="mt-5">No results found.</p>
+}
