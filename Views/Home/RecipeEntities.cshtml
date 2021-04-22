@@ -5,19 +5,7 @@
 }
 
 @section Styles {
-    <style>
-        .thead-red {
-            background-color: #AC3931;
-        }
-
-        .btn-red, .btn-red:active, .btn-red:visited {
-            background-color: #AC3931;
-        }
-    
-        .btn-red:hover {
-            background-color: #D64C42;
-        }
-    </style>
+    <link href="~/css/entities.css" rel="stylesheet">
 }
 
 <h1>Recipes</h1>
@@ -42,12 +30,12 @@
                     var Category = _context.Categories.Where(C => C.CategoryId == item.Category).SingleOrDefault();
                 }
 
-            <td>
-                @if (Category != null)
-                {
-                    <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.Category">@Category.Name</a>
-                }
-            </td>
+                <td>
+                    @if (Category != null)
+                    {
+                        <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.Category">@Category.Name</a>
+                    }
+                </td>
                 <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
                 <td>@Html.DisplayFor(modelItem => item.ServingSize)</td>
                 <td>
@@ -69,18 +57,18 @@
 <h1 class="mt-3">Categories</h1>
 
 <div class="mt-3">
-@foreach (var item in Model.Categories)
-{
-    <div class="btn-group mt-2 ml-2" role="group">
-        <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" type="button">
-            @Html.DisplayFor(modelItem => item.Name)
-        </a>
-        <a asp-action="Edit" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" type="button">
-            <i class="far fa-edit fa-lg"></i>
-        </a>
-        <a asp-action="Delete" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" onclick='return confirm("Are you sure?")' type="button">
-            <i class="far fa-trash-alt fa-lg"></i>
-        </a>
-    </div>
-}
+    @foreach (var item in Model.Categories)
+    {
+        <div class="btn-group mt-2 ml-2" role="group">
+            <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" type="button">
+                @Html.DisplayFor(modelItem => item.Name)
+            </a>
+            <a asp-action="Edit" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" type="button">
+                <i class="far fa-edit fa-lg"></i>
+            </a>
+            <a asp-action="Delete" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" onclick='return confirm("Are you sure?")' type="button">
+                <i class="far fa-trash-alt fa-lg"></i>
+            </a>
+        </div>
+    }
 </div>

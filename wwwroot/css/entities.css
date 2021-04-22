@@ -1,0 +1,11 @@
+.thead-red {
+    background-color: #AC3931;
+}
+
+.btn-red, .btn-red:active, .btn-red:visited {
+    background-color: #AC3931;
+}
+
+.btn-red:hover {
+    background-color: #D64C42;
+}

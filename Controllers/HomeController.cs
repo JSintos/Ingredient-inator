@@ -37,7 +37,9 @@ namespace Ingredient_inator.Controllers
 
         public IActionResult Index()
         {
-            var Recipes = _context.Recipes.ToList();
+            Random random = new Random();
+
+            var Recipes = _context.Recipes.ToList().OrderBy(x => random.Next()).Take(5);
 
             return View(Recipes);
         }

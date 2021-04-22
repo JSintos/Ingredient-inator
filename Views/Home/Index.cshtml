@@ -1,56 +1,99 @@
 ﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
 @model IEnumerable<Ingredient_inator.Models.Recipe>
-
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <div>
-        <img src="~/images/Ingredient-inator-Home.png"
-             style="object-fit: cover;
-                    height: 90%;
-                    width: 100%;
-                    object-position: top;" />
-    </div>
+@section Styles {
+    <style>
+        .btn-red, .btn-red:active, .btn-red:visited {
+            background-color: #AC3931;
+        }
 
-    <h1 class="display-4">Recipes</h1>
+        .btn-red:hover {
+            background-color: #D64C42;
+        }
+    </style>
+}
 
+<img class="img-fluid" src="~/images/Ingredient-inator-Home.png">
 
-    <div class="container">
-        <div class="row">
+<div class="text-center mb-5">
+    <h1 class="display-4 mt-5">Featured Recipes</h1>
 
-            @foreach (var item in Model)
-            {
-            <div class="col-sm">
-                <div class="card mb-3">
-                    <h3 class="card-header">@Html.DisplayFor(modelItem => item.Name)</h3>
-                    <img src="@Html.DisplayFor(modelItem => item.PhotoLink)" xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="300" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180"
-                         style="font-size:1.125rem;text-anchor:middle;object-fit: cover;object-position: center;">
+    <div class="row mt-5">
+        @foreach (var item in Model.Take(3))
+        {
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
+                    </div>
+
+                    <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
+
                     <div class="card-body">
-                        <div>
-                            <table style="margin: 0 auto;">
-                                <tr>
-                                    <td style="text-align: right;">
-                                        @Html.Raw(item.PortionList.Replace(",", "</br>"))
-                                    </td>
-                                    <td style="text-align: left;">
-                                        @Html.Raw(item.IngredientList.Replace(",", "</br>"))
-                                    </td>
-                                </tr>
-                            </table>
+                        <div class="row">
+                            <div class="col">
+                                @{
+                                    var Author = _context.Users.Where(U => U.Id == item.Author).SingleOrDefault();
+                                }
+                                
+                                <p class="card-text">by @Author.FirstName @Author.LastName</p>
+                            </div>
+
+                            <div class="col">
+                                <i class="fas fa-user-friends fa-lg mr-2"></i>
+                                @Html.DisplayFor(modelItem => item.ServingSize)
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <a asp-controller="Recipe" asp-action="ViewRecipe" asp-route-id="@item.RecipeId">View Recipe</a>
-                            <a asp-controller="Recipe" asp-action="ViewShoppingList" asp-route-id="@item.RecipeId">Print Shopping List</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Created by @Html.DisplayFor(modelItem => item.Author)
-                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="btn btn-red btn-block text-light">
+                            View Recipe
+                        </a>
                     </div>
                 </div>
             </div>
-            }
-        </div>
+        }
+    </div>
+
+    <div class="row justify-content-center mt-3">
+        @foreach (var item in Model.Skip(3))
+        {
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
+                    </div>
+
+                    <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                @{
+                                    var Author = _context.Users.Where(U => U.Id == item.Author).SingleOrDefault();
+                                }
+                                
+                                <p class="card-text">by @Author.FirstName @Author.LastName</p>
+                            </div>
+
+                            <div class="col">
+                                <i class="fas fa-users-friends fa-lg mr-2"></i>
+                                @Html.DisplayFor(modelItem => item.ServingSize)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="btn btn-red btn-block text-light">
+                            View Recipe
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
