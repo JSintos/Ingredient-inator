@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Ingredient_inator</RootNamespace>
+    <UserSecretsId>27a81a10-9e0c-47e1-afd6-1a9aa0962721</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
