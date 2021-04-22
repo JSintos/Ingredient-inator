@@ -17,9 +17,19 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            @*<label for="exampleSelect1">Example select</label>
+            <select class="form-control" id="exampleSelect1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>*@
+
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
+                <input asp-for="Category" class="form-control"/>
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,19 +50,19 @@
             </div>
 
             @*<div id="input" class="panel-body">
-                <div class="input-group">
-                    <input name="add-to-list" type="text" class="form-control" placeholder="Add Ingredient..." />
-                    <span class="input-group-btn"><button id="add" class="btn btn-primary">Add</button></span>
-                </div>
-                <br />
-                <div class="btn-group">
-                    <button id="clear" class="btn btn-danger">Clear List</button>
-                </div>
+            <div class="input-group">
+                <input name="add-to-list" type="text" class="form-control" placeholder="Add Ingredient..." />
+                <span class="input-group-btn"><button id="add" class="btn btn-primary">Add</button></span>
             </div>
-            <div id="script-error" class="panel-body bg-warning text-warning">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> Javascript isn't working correctly on your computer! The To-Do List cannot function properly!
+            <br />
+            <div class="btn-group">
+                <button id="clear" class="btn btn-danger">Clear List</button>
             </div>
-            <br />*@
+        </div>
+        <div id="script-error" class="panel-body bg-warning text-warning">
+            <span class="glyphicon glyphicon-exclamation-sign"></span> Javascript isn't working correctly on your computer! The To-Do List cannot function properly!
+        </div>
+        <br />*@
 
             <div class="form-group">
                 <label asp-for="Steps" class="control-label"></label>

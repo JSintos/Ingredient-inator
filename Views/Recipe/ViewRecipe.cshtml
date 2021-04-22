@@ -20,11 +20,12 @@
                font-weight: bold;">
         @Html.DisplayFor(model => model.Recipe.Name)
     </h2>
-
-    <p>
-        Category: @category.Name
-    </p>
-
+    @if (category != null)
+    {
+        <p>
+            Category: @category.Name
+        </p>
+    }
 
     <h4 style="text-transform: uppercase; font-weight: bold;">
         BY <a style="color: #AC3931;"> @author.FirstName @author.LastName</a>
