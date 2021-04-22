@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Ingredient_inator.Models
 {
-    public class EntityViewModel
+    public class RecipeCategoryViewModel
     {
-        public List<Category> Categories { get; set; }
         public List<Recipe> Recipes { get; set; }
-        public List<Review> Reviews { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

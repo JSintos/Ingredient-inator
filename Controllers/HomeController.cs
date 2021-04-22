@@ -29,6 +29,12 @@ namespace Ingredient_inator.Controllers
             _logger = logger;
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         public IActionResult Index()
         {
             var Recipes = _context.Recipes.ToList();
@@ -36,15 +42,14 @@ namespace Ingredient_inator.Controllers
             return View(Recipes);
         }
 
-        public IActionResult Privacy()
+        public IActionResult AboutUs()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Privacy()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
 
         public IActionResult Contact()
@@ -130,28 +135,29 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
-        public IActionResult AboutUs()
-        {
-            return View();
-        }
-
         [Authorize]
-        public ActionResult Profile()
+        public ActionResult RecipeEntities()
         {
             var userId = _userManager.GetUserId(User);
 
-            EntityViewModel entityViewModel = new EntityViewModel();
-
-            // This retrieves all entities created by the current logged in user
-            var FoundCategories = _context.Categories.Where(C => C.Author == userId).ToList();
             var FoundRecipes = _context.Recipes.Where(R => R.Author == userId).ToList();
+            var FoundCategories = _context.Categories.Where(C => C.Author == userId).ToList();
+
+            RecipeCategoryViewModel RCVM = new RecipeCategoryViewModel();
+            RCVM.Recipes = FoundRecipes;
+            RCVM.Categories = FoundCategories;
+
+            return View(RCVM);
+        }
+
+        [Authorize]
+        public ActionResult ReviewEntities()
+        {
+            var userId = _userManager.GetUserId(User);
+
             var FoundReviews = _context.Reviews.Where(R => R.Author == userId).ToList();
 
-            entityViewModel.Categories = FoundCategories;
-            entityViewModel.Recipes = FoundRecipes;
-            entityViewModel.Reviews = FoundReviews;
-
-            return View(entityViewModel);
+            return View(FoundReviews);
         }
     }
 }

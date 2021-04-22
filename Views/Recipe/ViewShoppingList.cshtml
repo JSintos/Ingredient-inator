@@ -1,4 +1,5 @@
-﻿@model Ingredient_inator.Models.Recipe
+﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
+@model Ingredient_inator.Models.Recipe
 
 @{
     ViewData["Title"] = "ViewShoppingList";
@@ -11,8 +12,12 @@
                font-weight: bold;">
         @Html.DisplayFor(model => model.Name)
     </h2>
+
+    @{
+        var author = _context.Users.Where(U => U.Id == Model.Author).SingleOrDefault();
+    }
     <h4 style="text-transform: uppercase; font-weight: bold;">
-        BY <a style="color: #AC3931;">@Html.DisplayFor(model => model.Author)</a>
+        BY <a style="color: #AC3931;">@author.FirstName @author.LastName </a>
     </h4>
     <hr />
 
@@ -33,13 +38,13 @@
         Print this List
     </button>
 
-    
+
 </div>
 
 <script>
     function hide() {
         var x = document.getElementById("btn");
-        x.style.visibility = "hidden";        
+        x.style.visibility = "hidden";
     }
     function show() {
         var x = document.getElementById("btn");

@@ -37,18 +37,11 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
-        //Ingredient-to-recipe generation method
-        //public IActionResult I2RG()
-        //{
-        //    var list = _context.Recipes.ToList();
-
-        //    return View(list);
-        //}
-
         [Authorize]
         [HttpPost]
         public IActionResult Create(Recipe Recipe)
         {
+
             var NewRecipe = new Recipe()
             {
                 Author = _userManager.GetUserId(User),
@@ -62,6 +55,11 @@ namespace Ingredient_inator.Controllers
                 PhotoLink = Recipe.PhotoLink,
                 VideoLink = Recipe.VideoLink
             };
+
+            if (Recipe.VideoLink != null)
+            {
+                NewRecipe.VideoLink = "https://www.youtube.com/embed/" + Recipe.VideoLink;
+            }
 
             _context.Recipes.Add(NewRecipe);
             _context.SaveChanges();
@@ -178,18 +176,58 @@ namespace Ingredient_inator.Controllers
             return View(FoundRecipe);
         }
 
-        // Ingredient-to-recipe generation method
-        public async Task<IActionResult> I2RG(string searchString)
+        public IActionResult I2RG()
         {
-            var recipes = from r in _context.Recipes
-                         select r;
+            var list = _context.Recipes.ToList();
 
-            if (!String.IsNullOrWhiteSpace(searchString))
+            return View(list);
+        }
+
+        [HttpPost]
+        // Ingredient-to-recipe generation method
+        public IActionResult I2RGResults(string SearchString)
+        {
+            var FoundRecipes = from r in _context.Recipes
+                               select r;
+
+            var _foundRecipes = new List<Recipe>();
+            var _incompleteRecipes = new List<Recipe>();
+
+            // Splits the search string using spaces as a delimiter
+            string[] SplitSearchString = SearchString.Trim().Split(' ');
+            int SearchStringCount = SplitSearchString.Length;
+
+            if (!String.IsNullOrWhiteSpace(SearchString))
             {
-                recipes = recipes.Where(s => s.IngredientList.Contains(searchString));
+                // Traverses through the list of recipes
+                foreach (Recipe Recipe in FoundRecipes)
+                {
+                    string[] SplitIngredientList = Recipe.IngredientList.Trim().Split(' ');
+                    int IngredientListCount = SplitIngredientList.Length;
+
+                    string[] tempSIL = SplitIngredientList;
+
+                    foreach (string s in SplitSearchString)
+                    {
+                        tempSIL = tempSIL.Where(value => value != s).ToArray();
+                    }
+
+                    if (tempSIL.Length == 0)
+                    {
+                        _foundRecipes.Add(Recipe);
+                    }
+                    else if (tempSIL.Length == 1)
+                    {
+                        _incompleteRecipes.Add(Recipe);
+                    }
+                }
             }
 
-            return View(await recipes.ToListAsync());
+            I2RGViewModel i2RGViewModel = new I2RGViewModel();
+            i2RGViewModel.FoundRecipes = _foundRecipes;
+            i2RGViewModel.IncompleteRecipes = _incompleteRecipes;
+
+            return View(i2RGViewModel);
         }
     }
 }

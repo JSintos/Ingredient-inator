@@ -19,36 +19,37 @@
 
     <div class="container">
         <div class="row">
+
             @foreach (var item in Model)
             {
-                <div class="col-sm">
-                    <div class="card mb-3">
-                        <h3 class="card-header">@Html.DisplayFor(modelItem => item.Name)</h3>
-                        <img src="@Html.DisplayFor(modelItem => item.PhotoLink)" xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="300" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180"
-                             style="font-size:1.125rem;text-anchor:middle;object-fit: cover;object-position: center;">
+            <div class="col-sm">
+                <div class="card mb-3">
+                    <h3 class="card-header">@Html.DisplayFor(modelItem => item.Name)</h3>
+                    <img src="@Html.DisplayFor(modelItem => item.PhotoLink)" xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="300" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180"
+                         style="font-size:1.125rem;text-anchor:middle;object-fit: cover;object-position: center;">
+                    <div class="card-body">
+                        <div>
+                            <table style="margin: 0 auto;">
+                                <tr>
+                                    <td style="text-align: right;">
+                                        @Html.Raw(item.PortionList.Replace(",", "</br>"))
+                                    </td>
+                                    <td style="text-align: left;">
+                                        @Html.Raw(item.IngredientList.Replace(",", "</br>"))
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <div class="card-body">
-                            <div>
-                                <table style="margin: 0 auto;">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            @Html.Raw(item.PortionList.Replace(",", "</br>"))
-                                        </td>
-                                        <td style="text-align: left;">
-                                             @Html.Raw(item.IngredientList.Replace(",", "</br>"))
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="card-body">
-                                <a asp-controller="Recipe" asp-action="ViewRecipe" asp-route-id="@item.RecipeId">View Recipe</a>
-                                <a asp-controller="Recipe" asp-action="ViewShoppingList" asp-route-id="@item.RecipeId">Print Shopping List</a>
-                            </div>
-                            <div class="card-footer text-muted">
-                                Created by @Html.DisplayFor(modelItem => item.Author)
-                            </div>
+                            <a asp-controller="Recipe" asp-action="ViewRecipe" asp-route-id="@item.RecipeId">View Recipe</a>
+                            <a asp-controller="Recipe" asp-action="ViewShoppingList" asp-route-id="@item.RecipeId">Print Shopping List</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Created by @Html.DisplayFor(modelItem => item.Author)
                         </div>
                     </div>
                 </div>
+            </div>
             }
         </div>
     </div>

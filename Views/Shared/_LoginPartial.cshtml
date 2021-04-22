@@ -8,8 +8,17 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link" id="manage" title="Manage">Hi, @UserManager.GetUserName(User)!</a>
+    <li class="nav-item dropdown">
+        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="accountDropdown" role="button">
+            Hi, @UserManager.GetUserName(User)!
+        </a>
+
+        <div aria-labelledby="accountDropdown" class="dropdown-menu">
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item" id="manage" title="Manage">Manage your account</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/Home/RecipeEntities">Your recipes and categories</a>
+            <a class="dropdown-item" href="/Home/ReviewEntities">Your reviews</a>
+        </div>
     </li>
     <li class="nav-item">
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="form-inline" id="logoutForm">
