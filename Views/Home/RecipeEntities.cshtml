@@ -5,19 +5,7 @@
 }
 
 @section Styles {
-    <style>
-        .thead-red {
-            background-color: #AC3931;
-        }
-
-        .btn-red, .btn-red:active, .btn-red:visited {
-            background-color: #AC3931;
-        }
-
-            .btn-red:hover {
-                background-color: #D64C42;
-            }
-    </style>
+    <link href="~/css/entities.css" rel="stylesheet">
 }
 
 <h1>Recipes</h1>
@@ -68,17 +56,17 @@
 <hr class="mt-5">
 <h1 class="mt-3">Categories</h1>
 
-<div class="mt-3">
+<div class="mt-3 mb-5">
     @foreach (var item in Model.Categories)
     {
         <div class="btn-group mt-2 ml-2" role="group">
-            <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" type="button">
+            <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light">
                 @Html.DisplayFor(modelItem => item.Name)
             </a>
-            <a asp-action="Edit" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" type="button">
+            <a asp-action="Edit" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light">
                 <i class="far fa-edit fa-lg"></i>
             </a>
-            <a asp-action="Delete" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" onclick='return confirm("Are you sure?")' type="button">
+            <a asp-action="Delete" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn btn-red text-light" onclick='return confirm("Are you sure?")'>
                 <i class="far fa-trash-alt fa-lg"></i>
             </a>
         </div>

@@ -1,61 +1,86 @@
-﻿@model IEnumerable<Ingredient_inator.Models.Recipe>
+﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
+@model IEnumerable<Ingredient_inator.Models.Recipe>
 @{
-    ViewData["Title"] = "I2RG";
+    ViewData["Title"] = "Search";
 }
 
-<h1>Ingredient-to-Recipe Generation</h1>
+@section Styles {
+    <style>
+        h1 {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .thead-red {
+            background-color: #AC3931;
+        }
 
-<form asp-controller="Recipe" asp-action="I2RGResults">
-    <p>
-        Ingredients: <input type="text" name="SearchString" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
+        .btn-red, .btn-red:active, .btn-red:visited {
+            background-color: #AC3931;
+        }
 
-<table class="table">
-    <thead>
+        .btn-red:hover {
+            background-color: #D64C42;
+        }
+    </style>
+}
+
+<div class="mb-3">
+    <div class="row">
+        <div class="col-9">
+            <h1>Ingredient-to-recipe search</h1>
+        </div>
+
+        <div class="col mt-1">
+            <form asp-action="I2RGResults" asp-controller="Recipe" class="form-inline">
+                <div class="input-group">
+                    <input class="form-control" name="SearchString" placeholder="Ingredients..." type="text">
+        
+                    <div class="input-group-append">
+                        <button class="btn btn-red text-light" type="Submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover mt-3" id="recipes">
+    <thead class="thead-red">
         <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                Serving Size
-            </th>
-            <th>
-                Portion List
-            </th>
-            <th>
-                Ingredient List
-            </th>
-            <th></th>
+            <th class="text-light">Name</th>
+            <th class="text-light">Category</th>
+            <th class="text-light">Serving Size</th>
+            <th class="text-light">Portion List</th>
+            <th class="text-light">Ingredient List</th>
+            <th class="text-light">Operations</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServingSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PortionList)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IngredientList)
-            </td>
-            <td>
-                <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">Details</a>
-            </td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+
+                @{
+                    var Category = _context.Categories.Where(C => C.CategoryId == item.Category).SingleOrDefault();
+                }
+
+                <td>
+                    @if (Category != null)
+                    {
+                        <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@item.Category">@Category.Name</a>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.ServingSize)</td>
+                <td>@Html.DisplayFor(modelItem => item.PortionList)</td>
+                <td>@Html.DisplayFor(modelItem => item.IngredientList)</td>
+                <td>
+                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="text-decoration-none">
+                        <i class="far fa-eye fa-lg"></i>
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

@@ -28,6 +28,8 @@ namespace Ingredient_inator.Controllers
         {
             var Recipes = _context.Recipes.ToList();
 
+            ViewBag.UserId = _userManager.GetUserId(User);
+
             return View(Recipes);
         }
 
@@ -178,9 +180,9 @@ namespace Ingredient_inator.Controllers
 
         public IActionResult I2RG()
         {
-            var list = _context.Recipes.ToList();
+            var List = _context.Recipes.ToList();
 
-            return View(list);
+            return View(List);
         }
 
         [HttpPost]
@@ -205,20 +207,30 @@ namespace Ingredient_inator.Controllers
                     string[] SplitIngredientList = Recipe.IngredientList.Trim().Split(' ');
                     int IngredientListCount = SplitIngredientList.Length;
 
-                    string[] tempSIL = SplitIngredientList;
-
-                    foreach (string s in SplitSearchString)
+                    if (SearchStringCount == 1 && IngredientListCount == 1)
                     {
-                        tempSIL = tempSIL.Where(value => value != s).ToArray();
+                        if (SplitIngredientList.Contains(SplitSearchString[0]))
+                        {
+                            _foundRecipes.Add(Recipe);
+                        }
                     }
+                    else
+                    {
+                        string[] tempSIL = SplitIngredientList;
 
-                    if (tempSIL.Length == 0)
-                    {
-                        _foundRecipes.Add(Recipe);
-                    }
-                    else if (tempSIL.Length == 1)
-                    {
-                        _incompleteRecipes.Add(Recipe);
+                        foreach (string s in SplitSearchString)
+                        {
+                            tempSIL = tempSIL.Where(value => value != s).ToArray();
+                        }
+
+                        if (tempSIL.Length == 0)
+                        {
+                            _foundRecipes.Add(Recipe);
+                        }
+                        else if (tempSIL.Length == 1)
+                        {
+                            _incompleteRecipes.Add(Recipe);
+                        }
                     }
                 }
             }
