@@ -36,7 +36,10 @@ namespace Ingredient_inator.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            return View();
+            RecipeCreateViewModel RCVM = new RecipeCreateViewModel();
+            RCVM.Categories = _context.Categories.ToList();
+
+            return View(RCVM);
         }
 
         [Authorize]
@@ -84,7 +87,11 @@ namespace Ingredient_inator.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(FoundRecipe);
+            RecipeEditViewModel REVM = new RecipeEditViewModel();
+            REVM.Recipe = FoundRecipe;
+            REVM.Categories = _context.Categories.ToList();
+
+            return View(REVM);
         }
 
         [Authorize]

@@ -10,7 +10,7 @@
             display: inline-block;
             vertical-align: middle;
         }
-        
+
         .thead-red {
             background-color: #AC3931;
         }
@@ -19,9 +19,9 @@
             background-color: #AC3931;
         }
 
-        .btn-red:hover {
-            background-color: #D64C42;
-        }
+            .btn-red:hover {
+                background-color: #D64C42;
+            }
     </style>
 }
 
@@ -49,11 +49,11 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
-    
+
                     @{
                         var Category = _context.Categories.Where(C => C.CategoryId == item.Category).SingleOrDefault();
                     }
-    
+
                     <td>
                         @if (Category != null)
                         {
@@ -101,11 +101,11 @@ else
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
-    
+
                     @{
                         var Category = _context.Categories.Where(C => C.CategoryId == item.Category).SingleOrDefault();
                     }
-    
+
                     <td>
                         @if (Category != null)
                         {
@@ -124,4 +124,9 @@ else
             }
         </tbody>
     </table>
+}
+
+@if (Model.FoundRecipes.Count == 0 && Model.IncompleteRecipes.Count == 0)
+{
+    <p class="mt-5">No results found.</p>
 }

@@ -1,5 +1,4 @@
-﻿@model Ingredient_inator.Models.Recipe
-
+﻿@model Ingredient_inator.Models.RecipeEditViewModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -12,46 +11,54 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="RecipeId" />
+            <input type="hidden" asp-for="Recipe.RecipeId" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Recipe.Name" class="control-label"></label>
+                <input asp-for="Recipe.Name" class="form-control" />
+                <span asp-validation-for="Recipe.Name" class="text-danger"></span>
+            </div>
+            <select asp-for="Recipe.Category">
+                @foreach (var item in Model.Categories)
+                {
+                    @if (item.CategoryId == Model.Recipe.Category)
+                    {
+                        <option selected value="@Html.Raw(item.CategoryId)">@Html.DisplayFor(modelItem => item.Name)</option>
+                    }
+                    else
+                    {
+                        <option value="@Html.Raw(item.CategoryId)">@Html.DisplayFor(modelItem => item.Name)</option>
+                    }
+                }
+            </select>
+            <div class="form-group">
+                <label asp-for="Recipe.ServingSize" class="control-label"></label>
+                <input asp-for="Recipe.ServingSize" class="form-control" />
+                <span asp-validation-for="Recipe.ServingSize" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="Recipe.PortionList" class="control-label"></label>
+                <textarea asp-for="Recipe.PortionList" class="form-control"></textarea>
+                <span asp-validation-for="Recipe.PortionList" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ServingSize" class="control-label"></label>
-                <input asp-for="ServingSize" class="form-control" />
-                <span asp-validation-for="ServingSize" class="text-danger"></span>
+                <label asp-for="Recipe.IngredientList" class="control-label"></label>
+                <textarea asp-for="Recipe.IngredientList" class="form-control"></textarea>
+                <span asp-validation-for="Recipe.IngredientList" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PortionList" class="control-label"></label>
-                <textarea asp-for="PortionList" class="form-control"></textarea>
-                <span asp-validation-for="PortionList" class="text-danger"></span>
+                <label asp-for="Recipe.Steps" class="control-label"></label>
+                <textarea asp-for="Recipe.Steps" class="form-control"></textarea>
+                <span asp-validation-for="Recipe.Steps" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IngredientList" class="control-label"></label>
-                <textarea asp-for="IngredientList" class="form-control"></textarea>
-                <span asp-validation-for="IngredientList" class="text-danger"></span>
+                <label asp-for="Recipe.PhotoLink" class="control-label"></label>
+                <input asp-for="Recipe.PhotoLink" class="form-control" />
+                <span asp-validation-for="Recipe.PhotoLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Steps" class="control-label"></label>
-                <textarea asp-for="Steps" class="form-control"></textarea>
-                <span asp-validation-for="Steps" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhotoLink" class="control-label"></label>
-                <input asp-for="PhotoLink" class="form-control" />
-                <span asp-validation-for="PhotoLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VideoLink" class="control-label"></label>
-                <input asp-for="VideoLink" class="form-control" />
-                <span asp-validation-for="VideoLink" class="text-danger"></span>
+                <label asp-for="Recipe.VideoLink" class="control-label"></label>
+                <input asp-for="Recipe.VideoLink" class="form-control" />
+                <span asp-validation-for="Recipe.VideoLink" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -66,4 +73,9 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $('#recipes').DataTable();
+        });
+    </script>
 }

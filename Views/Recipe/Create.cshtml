@@ -1,4 +1,4 @@
-﻿@model Ingredient_inator.Models.Recipe
+﻿@model Ingredient_inator.Models.RecipeCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -18,20 +18,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            @*<label for="exampleSelect1">Example select</label>
-            <select class="form-control" id="exampleSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>*@
-
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control"/>
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
+            <select asp-for="Category">
+                @foreach (var item in Model.Categories)
+                {
+                    <option value="@Html.Raw(item.CategoryId)">@Html.DisplayFor(modelItem => item.Name)</option>
+                }
+            </select>
             <div class="form-group">
                 <label asp-for="ServingSize" class="control-label"></label>
                 <input asp-for="ServingSize" class="form-control" />
