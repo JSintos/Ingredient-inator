@@ -66,22 +66,45 @@
             <img src="@Html.DisplayFor(model => model.Recipe.PhotoLink)" xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="300" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180"
                  style="font-size:1.125rem;text-anchor:middle;object-fit: cover;object-position: center;">
             @*Photo:
-                @Html.DisplayFor(model => model.Recipe.PhotoLink)*@
+        @Html.DisplayFor(model => model.Recipe.PhotoLink)*@
             <br />
-            <iframe width="100%" height="315" src="@Html.DisplayFor(model => model.Recipe.VideoLink)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            @if (Model.Recipe.VideoLink != null)
+            {
+                <iframe style="width: 100%" height="315" src="@Html.DisplayFor(model => model.Recipe.VideoLink)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            }
+            else
+            {
+                <p style="lead">@author.FirstName has not uploaded a video tutorial.</p>
+            }
         </dd>
     </dl>
 </div>
 @if (SignInManager.IsSignedIn(User))
 {
-    <div id="hide2">
-        <h1>Leave a review</h1>
+    <h1>Leave a review</h1>
+    <div class="form-group" id="hide2">
         <br />
         <form asp-action="Create" method="post" asp-controller="Review" id="toHide">
-            <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)"/>
-            <input type="text" asp-for="Content" value="" placeholder="Content" required/>
-            <input type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating (1-5)" required />
-            <input type="submit" name="submitReview" value="Submit review" />
+            <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
+            <table>
+                <tr>
+                    <td>
+                        <input class="form-control" style="width:500px" type="text" asp-for="Content" value="" placeholder="Content" required />
+                    </td>
+                    <td>
+                        <select class="form-control" style="width:60px" type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating (1-5)" required>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="btn btn-outline-primary" type="submit" name="submitReview" value="Submit review" />
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
 }
@@ -99,23 +122,30 @@
                     Rating
                 </th>
                 <th>
-                    Date and time
+                    Last Edit
                 </th>
                 <th>
-                    Edited?
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.Reviews)
             {
-
-                    var reviewer = _context.Users.Where(R => R.Id == Model.Recipe.Author).SingleOrDefault();
+                var reviewer = _context.Users.Where(U => U.Id == (item.Author)).SingleOrDefault();
 
                 <tr>
                     <td>
-                        @reviewer.FirstName @reviewer.LastName
-                        @*@Html.DisplayFor(modelItem => item.Author)*@
+                        @reviewer.FirstName
                     </td>
                     <td class="reviewContent">
                         @Html.DisplayFor(modelItem => item.Content)
@@ -128,41 +158,57 @@
                         {
                             @item.DateModified.Value.ToString("dd MMMM yyyy, HH:mm")
                         }
-                    </td>
-                    <td>
-                        @if (item.DateModified != null)
-                        {
-                            <p>Yes</p>
-                        }
                         else
                         {
-                            <p>No</p>
+                            @item.DatePosted.ToString("dd MMMM yyyy, HH:mm")
                         }
                     </td>
+                    @*<td>
+                            @if (item.DateModified != null)
+                            {
+                                <p>Yes</p>
+                            }
+                            else
+                            {
+                                <p>No</p>
+                            }
+                        </td>*@
+                    <td>
+                        @if (ViewBag.UserId == item.Author)
+                        {
+                            <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;"><i class="far fa-edit fa-lg"></i></a>
+                            <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'><i class="far fa-trash-alt fa-lg"></i></a>
+                        }
+                    </td>
+                    @*
+                        <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
+                        <input class="form-control" type="text" asp-for="Content" value="" placeholder="Content" required />
+                        <select class="form-control" type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating (1-5)" required>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <div class="col">
+                            <input class="btn btn-outline-primary" type="submit" name="submitReview" value="Submit review" />
+                        </div> *@
                     <form asp-action="Edit" method="post" asp-controller="Review">
                         <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
                         <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
                         <td>
-                            <textarea class="d-none editContent" data-reviewId="@item.ReviewId" asp-for="Content" cols="30" rows="10" value="@Html.Raw(item.Content)" required></textarea>
+                            <input class="d-none editContent form-control" data-reviewId="@item.ReviewId" asp-for="Content" size="100" value="@Html.Raw(item.Content)" required />
                             <span asp-validation-for="Content" class="text-danger"></span>
                         </td>
                         <td>
-                            <input class="d-none editRating" data-reviewId="@item.ReviewId" asp-for="Rating" type="number" min="1" max="5" value="@Html.Raw(item.Rating)" required>
+                            <input class="d-none editRating form-control" style="width: 50px"data-reviewId="@item.ReviewId" asp-for="Rating" type="number" min="1" max="5" value="@Html.Raw(item.Rating)" required>
                             <span asp-validation-for="Rating" class="text-danger"></span>
                         </td>
                         <td>
-                            <input class="d-none submitUpdatedReview" data-reviewId="@item.ReviewId" type="submit" value="Update">
-                            <input class="d-none cancelUpdate" data-reviewId="@item.ReviewId" type="button" value="Cancel">
+                            <input class="d-none submitUpdatedReview btn btn-outline-primary" data-reviewId="@item.ReviewId" type="submit" value="Update">
+                            <input class="d-none cancelUpdate btn btn-outline-secondary" data-reviewId="@item.ReviewId" type="button" value="Cancel">
                         </td>
                     </form>
-                    @if (ViewBag.UserId == item.Author)
-                    {
-                <td>
-                    <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;">Edit</a>
-                     |
-                    <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'>Delete</a>
-                </td>
-                    }
                 </tr>
             }
         </tbody>
