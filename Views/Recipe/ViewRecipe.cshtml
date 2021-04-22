@@ -109,9 +109,13 @@
         <tbody>
             @foreach (var item in Model.Reviews)
             {
+
+                    var reviewer = _context.Users.Where(R => R.Id == Model.Recipe.Author).SingleOrDefault();
+
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Author)
+                        @reviewer.FirstName @reviewer.LastName
+                        @*@Html.DisplayFor(modelItem => item.Author)*@
                     </td>
                     <td class="reviewContent">
                         @Html.DisplayFor(modelItem => item.Content)
