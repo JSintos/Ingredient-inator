@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Ingredient_inator.Models.Review>
+
 @{
     ViewData["Title"] = "Profile - Review";
 }
@@ -32,7 +33,7 @@
                     <a asp-action="Edit" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="text-decoration-none ml-2">
                         <i class="far fa-edit fa-lg"></i>
                     </a>
-                    <a asp-action="Delete" asp-controller="Recipe" asp-route-id="@item.RecipeId" class="text-decoration-none ml-2" onclick='return confirm("Are you sure?")'>
+                    <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" class="text-decoration-none ml-2" onclick='return confirm("Are you sure?")'>
                         <i class="far fa-trash-alt fa-lg"></i>
                     </a>
                 </td>
