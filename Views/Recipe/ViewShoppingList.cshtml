@@ -1,53 +1,43 @@
 ﻿@inject Ingredient_inator.Data.ApplicationDbContext _context;
 @model Ingredient_inator.Models.Recipe
-
 @{
-    ViewData["Title"] = "ViewShoppingList";
+    ViewData["Title"] = Model.Name + " - Shopping List";
 }
 
-
-<div style="text-align: center;">
-    <h2 style="text-transform: uppercase;
-               color: #AC3931;
-               font-weight: bold;">
-        @Html.DisplayFor(model => model.Name)
-    </h2>
+<div class="text-center">
+    <h1 class="display-4">@Html.DisplayFor(model => model.Name)</h1>
 
     @{
-        var author = _context.Users.Where(U => U.Id == Model.Author).SingleOrDefault();
+        var Author = _context.Users.Where(U => U.Id == Model.Author).SingleOrDefault();
     }
-    <h4 style="text-transform: uppercase; font-weight: bold;">
-        BY <a style="color: #AC3931;">@author.FirstName @author.LastName </a>
-    </h4>
-    <hr />
 
-    <h4>Shopping List</h4>
-
-    <dl class="row" style="justify-content: center;">
-
-        <dd class="col-sm-2" style="text-align: right!important;" name="Portion">
+    <h5>@Author.FirstName @Author.LastName</h5>
+    <hr>
+    <div class="row justify-content-center">
+        <div class="col-2">
             @Html.Raw(Model.PortionList.Replace(",", "<br/>"))
-        </dd>
-        <dd class="col-sm-2" style="text-align: left!important" name="Ingredient">
+        </div>
+
+        <div class="col-2">
             @Html.Raw(Model.IngredientList.Replace(",", "<br/>"))
-        </dd>
+        </div>
+    </div>
 
-    </dl>
-    <button type="button" class="btn btn-outline-success"
-            onclick="hide(); window.print(); show()" id="btn">
-        Print this List
-    </button>
-
-
+    <button class="btn btn-outline-primary mt-5" type="button">Print Shopping List</button>
 </div>
 
-<script>
-    function hide() {
-        var x = document.getElementById("btn");
-        x.style.visibility = "hidden";
-    }
-    function show() {
-        var x = document.getElementById("btn");
-        x.style.visibility = "visible";
-    }
-</script>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".btn").on("click", function(){
+                $(this).toggleClass("d-none");
+                $("#footer").toggleClass("d-none");
+
+                window.print();
+
+                $(this).toggleClass("d-none");
+                $("#footer").toggleClass("d-none");
+            });
+        });
+    </script>
+}
