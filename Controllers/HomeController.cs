@@ -75,7 +75,6 @@ namespace Ingredient_inator.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Contact(Contact record)
         {

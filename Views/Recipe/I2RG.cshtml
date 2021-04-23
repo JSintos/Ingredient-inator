@@ -35,10 +35,12 @@
             <form asp-action="I2RGResults" asp-controller="Recipe" class="form-inline">
                 <div class="input-group">
                     <input class="form-control" name="SearchString" placeholder="Ingredients..." type="text">
-        
+
                     <div class="input-group-append">
                         <button class="btn btn-red text-light" type="Submit">Search</button>
                     </div>
+
+                    <small class="form-text text-muted">Separate keywords with commas</small>
                 </div>
             </form>
         </div>

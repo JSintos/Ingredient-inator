@@ -211,7 +211,7 @@ namespace Ingredient_inator.Controllers
             var _incompleteRecipes = new List<Recipe>();
 
             // Splits the search string using spaces as a delimiter
-            string[] SplitSearchString = SearchString.Trim().Split(' ');
+            string[] SplitSearchString = SearchString.Trim().Split(',');
             int SearchStringCount = SplitSearchString.Length;
 
             if (!String.IsNullOrWhiteSpace(SearchString))
@@ -219,7 +219,7 @@ namespace Ingredient_inator.Controllers
                 // Traverses through the list of recipes
                 foreach (Recipe Recipe in FoundRecipes)
                 {
-                    string[] SplitIngredientList = Recipe.IngredientList.Trim().Split(' ');
+                    string[] SplitIngredientList = Recipe.IngredientList.Trim().Split(',');
                     int IngredientListCount = SplitIngredientList.Length;
 
                     if (SearchStringCount == 1 && IngredientListCount == 1)
