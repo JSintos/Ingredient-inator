@@ -214,6 +214,11 @@ namespace Ingredient_inator.Controllers
             string[] SplitSearchString = SearchString.Trim().Split(',');
             int SearchStringCount = SplitSearchString.Length;
 
+            for (int Counter = 0; Counter < SplitSearchString.Length; ++Counter)
+            {
+                SplitSearchString[Counter] = SplitSearchString[Counter].Trim();
+            }
+
             if (!String.IsNullOrWhiteSpace(SearchString))
             {
                 // Traverses through the list of recipes
@@ -221,6 +226,11 @@ namespace Ingredient_inator.Controllers
                 {
                     string[] SplitIngredientList = Recipe.IngredientList.Trim().Split(',');
                     int IngredientListCount = SplitIngredientList.Length;
+
+                    for (int Counter = 0; Counter < SplitIngredientList.Length; ++Counter)
+                    {
+                        SplitIngredientList[Counter] = SplitIngredientList[Counter].Trim();
+                    }
 
                     if (SearchStringCount == 1 && IngredientListCount == 1)
                     {
@@ -237,6 +247,8 @@ namespace Ingredient_inator.Controllers
                         {
                             tempSIL = tempSIL.Where(value => value != s).ToArray();
                         }
+
+                        System.Diagnostics.Debug.WriteLine("Here! -> " + Recipe.Name + " " + tempSIL.Length);
 
                         if (tempSIL.Length == 0)
                         {

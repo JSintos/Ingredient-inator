@@ -74,11 +74,11 @@
     </table>
 }
 
-@if (Model.IncompleteRecipes.Count == 1)
+@if (Model.IncompleteRecipes.Count == 1 && Model.FoundRecipes.Count != 0 && Model.IncompleteRecipes.Count != 0)
 {
     <p class="mt-5">You can create this recipe however you're missing an ingredient!</p>
 }
-else
+else if (Model.IncompleteRecipes.Count > 1 && Model.FoundRecipes.Count != 0 && Model.IncompleteRecipes.Count != 0)
 {
     <p class="mt-5">You can create these recipes however you're missing an ingredient!</p>
 }
