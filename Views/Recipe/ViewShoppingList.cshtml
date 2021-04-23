@@ -4,6 +4,8 @@
     ViewData["Title"] = Model.Name + " - Shopping List";
 }
 
+<a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@Model.RecipeId">< Go back</a>
+
 <div class="text-center">
     <h1 class="display-4">@Html.DisplayFor(model => model.Name)</h1>
 

@@ -27,7 +27,9 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <h5>
+                            <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">@Html.DisplayFor(modelItem => item.Name)</a>
+                        </h5>
                     </div>
 
                     <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
@@ -65,10 +67,14 @@
             <div class="col-4">
                 <div class="card">
                     <div class="card-header">
-                        <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <h5>
+                            <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">@Html.DisplayFor(modelItem => item.Name)</a>
+                        </h5>
                     </div>
 
-                    <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
+                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">
+                        <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
+                    </a>
 
                     <div class="card-body">
                         <div class="row">

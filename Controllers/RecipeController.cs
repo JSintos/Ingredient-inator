@@ -88,7 +88,15 @@ namespace Ingredient_inator.Controllers
             }
 
             RecipeEditViewModel REVM = new RecipeEditViewModel();
-            REVM.Recipe = FoundRecipe;
+            REVM.RecipeId = FoundRecipe.RecipeId;
+            REVM.Name = FoundRecipe.Name;
+            REVM.Category = FoundRecipe.Category;
+            REVM.ServingSize = FoundRecipe.ServingSize;
+            REVM.PortionList = FoundRecipe.PortionList;
+            REVM.IngredientList = FoundRecipe.IngredientList;
+            REVM.Steps = FoundRecipe.Steps;
+            REVM.PhotoLink = FoundRecipe.PhotoLink;
+            REVM.VideoLink = FoundRecipe.VideoLink;
             REVM.Categories = _context.Categories.ToList();
 
             return View(REVM);
