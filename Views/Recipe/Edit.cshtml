@@ -60,6 +60,7 @@
                     <div class="form-group">
                         <label asp-for="PortionList" class="control-label"></label>
                         <textarea asp-for="PortionList" class="form-control" rows="5"></textarea>
+                        <small class="form-text text-muted">Use commas to seperate the portion list</small>
                         <span asp-validation-for="PortionList" class="text-danger"></span>
                     </div>
                 </div>
@@ -68,6 +69,7 @@
                     <div class="form-group">
                         <label asp-for="IngredientList" class="control-label"></label>
                         <textarea asp-for="IngredientList" class="form-control" rows="5"></textarea>
+                        <small class="form-text text-muted">Use commas to seperate the ingredient list</small>
                         <span asp-validation-for="IngredientList" class="text-danger"></span>
                     </div>
                 </div>
@@ -76,6 +78,7 @@
             <div class="form-group">
                 <label asp-for="Steps" class="control-label"></label>
                 <textarea asp-for="Steps" class="form-control" rows="6"></textarea>
+                <small class="form-text text-muted">Use semicolons to seperate the steps</small>
                 <span asp-validation-for="Steps" class="text-danger"></span>
             </div>
         </div>

@@ -4,215 +4,189 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @model Ingredient_inator.Models.RecipeReviewViewModel
 @{
-    ViewData["Title"] = "ViewRecipe";
+    ViewData["Title"] = Model.Recipe.Name + " - Recipe";
 }
 
-<div>
+@section Styles {
+    <style>
+        h1 {
+            color: #AC3931;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        h3 {
+            color: #AC3931;
+            font-weight: 600;
+        }
+
+        .categoryName, .byLine {
+            color: #AC3931;
+        }
+
+        .photoLink {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .fa-edit {
+            cursor: pointer;
+            color: #0366D6;
+        }
+    </style>
+}
+
+<div class="mb-5">
+    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@Model.RecipeId">< Go back</a>
+
+    <div>
+        <h1>@Html.DisplayFor(model => model.Recipe.Name)</h1>
+
+        @if (ViewBag.UserId == Model.Recipe.Author)
+        {
+            <a asp-action="Edit" asp-controller="Recipe" asp-route-id="@Model.Recipe.RecipeId" class="btn btn-outline-warning ml-5">Edit Recipe</a>
+            <a asp-action="Delete" asp-controller="Recipe" asp-route-id="@Model.Recipe.RecipeId" class="btn btn-outline-danger" onclick='return confirm("Are you sure?")'>Delete Recipe</a>
+        }
+
+        <a asp-action="ViewShoppingList" asp-controller="Recipe" asp-route-id="@Model.Recipe.RecipeId" class="btn btn-outline-info ml-3" onclick="hide(); window.print(); show()">Print as Shopping List</a>
+    </div>
+
     @{
-        var author = _context.Users.Where(U => U.Id == Model.Recipe.Author).SingleOrDefault();
-        var category = _context.Categories.Where(C => C.CategoryId == Model.Recipe.Category).SingleOrDefault();
+        var Author = _context.Users.Where(U => U.Id == Model.Recipe.Author).SingleOrDefault();
+        var Category = _context.Categories.Where(C => C.CategoryId == Model.Recipe.Category).SingleOrDefault();
     }
 
-    <a class="btn btn-outline-secondary" asp-action="Index" id="hide">Back to Recipes</a>
+    <h5 class="mt-3">
+        @if (Category != null)
+        {
+            <span>Category: <a asp-action="ViewCategory" asp-controller="Category" asp-route-id="@Category.CategoryId" class="categoryName">@Category.Name</a> |</span>
+        }
 
-    <h2 style="text-transform: uppercase;
-               color: #AC3931;
-               font-weight: bold;">
-        @Html.DisplayFor(model => model.Recipe.Name)
-    </h2>
-    @if (category != null)
-    {
-        <p>
-            Category: @category.Name
-        </p>
-    }
+        <span class="byLine">@Author.FirstName @Author.LastName</span>
+    </h5>
+    <hr>
+    <div class="row">
+        <p class="col-4">Ingredients</p>
+        <p class="col-4">Instructions</p>
+        <p class="col-4">Media</p>
+    </div>
 
-    <h4 style="text-transform: uppercase; font-weight: bold;">
-        BY <a style="color: #AC3931;"> @author.FirstName @author.LastName</a>
-    </h4>
-    @if (ViewBag.UserId == Model.Recipe.Author)
-    {
+    <div class="row">
+        <p class="text-right col-1">@Html.Raw(Model.Recipe.PortionList.Replace(",", "<br/><br/>"))</p>
+        <p class="col-2">@Html.Raw(Model.Recipe.IngredientList.Replace(",", "<br/><br/>"))</p>    
+        <div class="col-1"></div>
+        <p class="col-4">@Html.Raw(Model.Recipe.Steps.Replace(";", "<br/><br/>"))</p>
 
-        <p id="toHide">
-            <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Recipe.RecipeId">Edit Recipe</a>
-            <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Recipe.RecipeId" onclick='return confirm("Are you sure?")'>Delete Recipe</a>
-        </p>
-    }
-    <button class="btn btn-outline-info" onclick="hide(); window.print(); show()" id="hide1">Print as Shopping List</button>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-4">
-            Ingredients
-        </dt>
-        <dt class="col-sm-4">
-            Instructions
-        </dt>
-        <dt class="col-sm-4">
-            Photo
-        </dt>
-    </dl>
-    <dl class="row">
-        <dd class="col-sm-1" style="text-align: right;">
-            @Html.Raw(Model.Recipe.PortionList.Replace(",", "<br/><br/>"))
-        </dd>
-        <dd class="col-sm-2">
-            @Html.Raw(Model.Recipe.IngredientList.Replace(",", "<br/><br/>"))
-        </dd>
-        <dd class="col-sm-1"></dd>
-        <dd class="col-sm-4">
-            @Html.Raw(Model.Recipe.Steps.Replace(";", "<br/><br/>"))
-        </dd>
-        <dd class="col-sm-4">
-            <img src="@Html.DisplayFor(model => model.Recipe.PhotoLink)" xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="300" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180"
-                 style="font-size:1.125rem;text-anchor:middle;object-fit: cover;object-position: center;">
-            @*Photo:
-        @Html.DisplayFor(model => model.Recipe.PhotoLink)*@
-            <br />
+        <div class="col-4">
+            <img class="d-block user-select-none photoLink" focusable="false" height="300" preserveaspectratio="xMidYMid slice" src="@Html.DisplayFor(model => model.Recipe.PhotoLink)" viewbox="0 0 318 180" width="100%">
+            <br>
             @if (Model.Recipe.VideoLink != null)
             {
-                <iframe style="width: 100%" height="315" src="@Html.DisplayFor(model => model.Recipe.VideoLink)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe allow="autoplay; encrypted-media" allowfullscreen frameborder="0" height="315" style="width: 100%"  src="@Html.DisplayFor(model => model.Recipe.VideoLink)"></iframe>
             }
             else
             {
-                <p style="lead">@author.FirstName has not uploaded a video tutorial.</p>
+                <p>@Author.FirstName has not uploaded a video tutorial.</p>
             }
-        </dd>
-    </dl>
-</div>
-@if (SignInManager.IsSignedIn(User))
-{
-    <h1>Leave a review</h1>
-    <div class="form-group" id="hide2">
-        <br />
-        <form asp-action="Create" method="post" asp-controller="Review" id="toHide">
-            <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
-            <table>
-                <tr>
-                    <td>
-                        <input class="form-control" style="width:500px" type="text" asp-for="Content" value="" placeholder="Content" required />
-                    </td>
-                    <td>
-                        <select class="form-control" style="width:60px" type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating (1-5)" required>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="btn btn-outline-primary" type="submit" name="submitReview" value="Submit review" />
-                    </td>
-                </tr>
-            </table>
-        </form>
+        </div>
     </div>
-}
-<div id="hide3">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Author
-                </th>
-                <th>
-                    Content
-                </th>
-                <th>
-                    Rating
-                </th>
-                <th>
-                    Last Edit
-                </th>
-                <th>
+    <hr>
 
-                </th>
-                <th>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="mt-3 mb-3">
+            <h3 class="mb-3">Leave a review</h3>
 
-                </th>
-                <th>
+            <form asp-action="Create" asp-controller="Review" class="form-inline" method="post">
+                <input asp-for="RecipeId" type="hidden" value="@Html.Raw(Model.Recipe.RecipeId)">
+                <div class="form-group">
+                    <textarea asp-for="Content" cols="50" class="form-control" placeholder="What are your thoughts?" required rows="3"></textarea>    
+                </div>
 
-                </th>
-                <th>
+                <div class="form-group ml-3">
+                    <label for="reviewRating">Rating</label>
+                    <select asp-for="Rating" id="reviewRating" class="form-control ml-1" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Reviews)
-            {
-                var reviewer = _context.Users.Where(U => U.Id == (item.Author)).SingleOrDefault();
+                <button class="btn btn-primary ml-3" type="submit">Submit Review</button>
+            </form>
+        </div>
+        <hr>
+    }
 
-                <tr>
-                    <td>
-                        @reviewer.FirstName
-                    </td>
-                    <td class="reviewContent">
-                        @Html.DisplayFor(modelItem => item.Content)
-                    </td>
-                    <td class="reviewRating">
-                        @Html.DisplayFor(modelItem => item.Rating)
-                    </td>
-                    <td>
-                        @if (item.DateModified != null)
+    <h3>Reviews (@Model.Reviews.Count)</h3>
+
+    <div class="mt-3 ml-3">
+        @foreach (var item in Model.Reviews)
+        {
+            var Reviewer = _context.Users.Where(U => U.Id == item.Author).SingleOrDefault();
+
+            <div class="mb-1">
+                <div class="row reviewContent" data-reviewId="@item.ReviewId">
+                    <p>@Html.DisplayFor(modelItem => item.Content)</p>
+                </div>
+    
+                <div class="row mt-3 reviewDiv" data-reviewId="@item.ReviewId">
+                    @Reviewer.LastName, @Reviewer.FirstName
+                    <i class="fas fa-grip-lines-vertical fa-sm mx-3 mt-2"></i>
+                    @item.Rating stars
+                    <i class="fas fa-grip-lines-vertical fa-sm mx-3 mt-2"></i>
+                    @item.DatePosted.ToString("M/dd/yyyy")
+
+                    @if (ViewBag.UserId == item.Author)
+                    {
+                        <i class="fas fa-grip-lines-vertical fa-sm mx-3 mt-2"></i>
+                        <a class="editReview" data-reviewId="@item.ReviewId"><i class="far fa-edit fa-lg"></i></a>
+                        <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" class="ml-3" onclick='return confirm("Are you sure?")'><i class="far fa-trash-alt fa-lg"></i></a>
+                    }
+                </div>
+            </div>
+
+            <form asp-action="Edit" asp-controller="Review" class="form-inline" method="post">
+                <input asp-for="ReviewId" type="hidden" value="@Html.Raw(item.ReviewId)">
+                <input asp-for="RecipeId" type="hidden" value="@Html.Raw(item.RecipeId)">
+
+                <div class="form-group">
+                    <textarea asp-for="Content" cols="50" class="form-control d-none editContent" data-reviewId="@item.ReviewId" placeholder="What are your thoughts?" required rows="3"></textarea>    
+                </div>
+
+                <div class="form-group ml-3">
+                    @{
+                        List<int> ratingNumbers = new List<int>() { 1, 2, 3, 4, 5 };
+                    }
+
+                    <select asp-for="Rating" class="form-control d-none editRating ml-1" data-reviewId="@item.ReviewId" required>
+                        @foreach (var number in ratingNumbers)
                         {
-                            @item.DateModified.Value.ToString("dd MMMM yyyy, HH:mm")
-                        }
-                        else
-                        {
-                            @item.DatePosted.ToString("dd MMMM yyyy, HH:mm")
-                        }
-                    </td>
-                    @*<td>
-                            @if (item.DateModified != null)
+                            @if (number == item.Rating)
                             {
-                                <p>Yes</p>
+                                <option selected value="@number">@number</option>
                             }
                             else
                             {
-                                <p>No</p>
+                                <option value="@number">@number</option>
                             }
-                        </td>*@
-                    <td>
-                        @if (ViewBag.UserId == item.Author)
-                        {
-                            <a class="editReview" data-reviewId="@item.ReviewId" style="cursor: pointer; color: #0366d6;"><i class="far fa-edit fa-lg"></i></a>
-                            <a asp-action="Delete" asp-controller="Review" asp-route-id="@item.ReviewId" onclick='return confirm("Are you sure?")'><i class="far fa-trash-alt fa-lg"></i></a>
                         }
-                    </td>
-                    @*
-                        <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
-                        <input class="form-control" type="text" asp-for="Content" value="" placeholder="Content" required />
-                        <select class="form-control" type="number" asp-for="Rating" min="1" max="5" value="" placeholder="Rating (1-5)" required>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                        <div class="col">
-                            <input class="btn btn-outline-primary" type="submit" name="submitReview" value="Submit review" />
-                        </div> *@
-                    <form asp-action="Edit" method="post" asp-controller="Review">
-                        <input type="hidden" asp-for="ReviewId" value="@Html.Raw(item.ReviewId)" />
-                        <input type="hidden" asp-for="RecipeId" value="@Html.Raw(Model.Recipe.RecipeId)" />
-                        <td>
-                            <input class="d-none editContent form-control" data-reviewId="@item.ReviewId" asp-for="Content" size="100" value="@Html.Raw(item.Content)" required />
-                            <span asp-validation-for="Content" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input class="d-none editRating form-control" style="width: 50px"data-reviewId="@item.ReviewId" asp-for="Rating" type="number" min="1" max="5" value="@Html.Raw(item.Rating)" required>
-                            <span asp-validation-for="Rating" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input class="d-none submitUpdatedReview btn btn-outline-primary" data-reviewId="@item.ReviewId" type="submit" value="Update">
-                            <input class="d-none cancelUpdate btn btn-outline-secondary" data-reviewId="@item.ReviewId" type="button" value="Cancel">
-                        </td>
-                    </form>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary d-none submitUpdatedReview ml-3" data-reviewId="@item.ReviewId" type="submit">Update</button>
+                <button class="btn btn-secondary d-none cancelUpdate ml-2" data-reviewId="@item.ReviewId" type="button">Cancel</button>
+            </form>
+
+            <hr>
+        }
+    </div>
 </div>
 
 @section Scripts{
@@ -221,7 +195,7 @@
         $(document).ready(function () {
             $(".editReview").on("click", function () {
                 var reviewId = $(this).attr("data-reviewId");
-                var addKeywords = [".editReview", ".reviewContent", ".reviewRating"];
+                var addKeywords = [".reviewContent", ".reviewDiv"];
                 var removeKeywords = [".editContent", ".editRating", ".submitUpdatedReview", ".cancelUpdate"];
 
                 addKeywords.forEach(element => {
@@ -244,7 +218,7 @@
             $(".cancelUpdate").on("click", function () {
                 var reviewId = $(this).attr("data-reviewId");
                 var addKeywords = [".editContent", ".editRating", ".submitUpdatedReview", ".cancelUpdate"];
-                var removeKeywords = [".editReview", ".reviewContent", ".reviewRating"];
+                var removeKeywords = [".reviewContent", ".reviewDiv"];
 
                 addKeywords.forEach(element => {
                     $(element).each(function (i, el) {
@@ -263,29 +237,5 @@
                 });
             });
         });
-        function hide() {
-            var a = document.getElementById("toHide");
-            var b = document.getElementById("hide");
-            var c = document.getElementById("hide1");
-            var d = document.getElementById("hide2");
-            var e = document.getElementById("hide3");
-            a.style.visibility = "hidden";
-            b.style.visibility = "hidden";
-            c.style.visibility = "hidden";
-            d.style.visibility = "hidden";
-            e.style.visibility = "hidden";
-        }
-        function show() {
-            var a = document.getElementById("toHide");
-            var b = document.getElementById("hide");
-            var c = document.getElementById("hide1");
-            var d = document.getElementById("hide2");
-            var e = document.getElementById("hide3");
-            a.style.visibility = "visible";
-            b.style.visibility = "visible";
-            c.style.visibility = "visible";
-            d.style.visibility = "visible";
-            e.style.visibility = "visible";
-        }
     </script>
 }
