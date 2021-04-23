@@ -32,7 +32,9 @@
                         </h5>
                     </div>
 
-                    <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
+                    <a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-id="@item.RecipeId">
+                        <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.PhotoLink)">
+                    </a>
 
                     <div class="card-body">
                         <div class="row">
@@ -82,7 +84,7 @@
                                 @{
                                     var Author = _context.Users.Where(U => U.Id == item.Author).SingleOrDefault();
                                 }
-                                
+
                                 <p class="card-text">by @Author.FirstName @Author.LastName</p>
                             </div>
 
