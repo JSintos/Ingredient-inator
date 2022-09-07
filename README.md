@@ -27,7 +27,7 @@ Originally, this project served as our final project in our C# programming class
 
 ## Collaborators
 
-[Anneka de Leon](https://github.com/annekadeleon)
-[Deneb Ho](https://github.com/christiandenebho)
-[Joshua Lagarejos](https://github.com/joshualagarejos)
+[Anneka de Leon](https://github.com/annekadeleon)  
+[Deneb Ho](https://github.com/christiandenebho)  
+[Joshua Lagarejos](https://github.com/joshualagarejos)  
 [Joshua Sintos](https://github.com/JSintos)
