@@ -1,7 +1,7 @@
 <h1 align="center">
     Ingredient-inator
     <br><br>
-    <img alt="Ingredient-inator screenshot" height="300" src="https://github.com/JSintos/Ingredient-inator/blob/master/screenshot.png?raw=true">
+    <img alt="Ingredient-inator screenshot" height="300" src="https://github.com/JSintos/Ingredient-inator/blob/develop/screenshot.png?raw=true">
 </h1>
 
 This project is a digital cookbook which main theme revolves around generating recipes from ingredients users have in their pantry or refrigerator.
